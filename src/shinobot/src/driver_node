@@ -142,9 +142,9 @@ def ObstacleAvoid():
 
 rospy.init_node('driver')
 
-rospy.Subscriber('command', String, CommandCallback)
+#rospy.Subscriber('command', String, CommandCallback)
 
-#rospy.Subscriber("distance_sense", Float64, callback)
+rospy.Subscriber("distance_sense", Float64, callback)
 
 rospy.spin()
 print('Shutting down: stopping motors')
