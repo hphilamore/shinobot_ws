@@ -217,6 +217,9 @@ rospy.init_node('driver')
 
 command = message_filters.Subscriber('command', String)
 distance = message_filters.Subscriber('distance_sense', Float64)
+
+print(command, type(command), command.data, type(command.data))
+
 ts = message_filters.ApproximateTimeSynchronizer([command, distance], 5, 1, allow_headerless=True)
 ts.registerCallback(Callback)
 
