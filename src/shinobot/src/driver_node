@@ -125,6 +125,7 @@ def Callback(commandMessage, distanceMessage):
     print('OK')
 
     print(commandMessage, type(commandMessage))
+    print(distanceMessage, type(distanceMessage))
 
     command = commandMessage.data
     distance = distanceMessage.data
