@@ -116,9 +116,8 @@ def CommandCallback(commandMessage):
 
 
 # Message handler
-def Callback(commandMessage, distanceMessage):
-    command = commandMessage
-    distance = distanceMessage  
+#def Callback(commandMessage, distanceMessage):
+def Callback(): 
 
     Enable()
 
@@ -166,6 +165,15 @@ def callback(data):
         Forwards()
 
 
+def storeCommand(data):
+    global command 
+    command = data.data
+
+def storeDistance(data):
+    global distance
+    distance = data.data
+
+
 def ObstacleAvoid(): 
     # Back off a little 
     inittime = time.time() 
@@ -190,16 +198,23 @@ def ObstacleAvoid():
 
 rospy.init_node('driver')
 
-#rospy.Subscriber('command', String, CommandCallback)
+# rospy.Subscriber('command', String, CommandCallback)
 
-#rospy.Subscriber("distance_sense", Float64, callback)
+# rospy.Subscriber("distance_sense", Float64, callback)
 
-msgCommand = rospy.Subscriber('command', String)
-print(msgCommand.data, type(msgCommand.data))
-msgDistance = rospy.Subscriber("distance_sense", Float64)
-print(msgDistance.data, type(msgDistance.data))
+rospy.Subscriber('command', String, StoreCommand)
 
-Callback(msgCommand, msgDistance)
+rospy.Subscriber("distance_sense", Float64, StoreDistance)
+
+# msgCommand = rospy.Subscriber('command', String)
+# print(msgCommand.data, type(msgCommand.data))
+# msgDistance = rospy.Subscriber("distance_sense", Float64)
+# print(msgDistance.data, type(msgDistance.data))
+
+
+
+# Callback(msgCommand, msgDistance)
+Callback()
 
 rospy.spin()
 
