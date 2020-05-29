@@ -1,0 +1,8 @@
+prefix=/home/shinobot/shinobot_ws/install
+
+Name: shinobot
+Description: Description of shinobot
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

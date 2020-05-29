@@ -1,0 +1,2 @@
+robot_setup_tf:shinobot
+-DCATKIN_DEVEL_PREFIX=/home/shinobot/shinobot_ws/devel -DCMAKE_INSTALL_PREFIX=/home/shinobot/shinobot_ws/install -G Unix Makefiles
