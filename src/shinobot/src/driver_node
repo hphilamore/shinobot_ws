@@ -11,214 +11,226 @@ import message_filters
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 
-# Set variables for the GPIO motor pins
-pinMaF = 10
-pinMaB = 9
-pinMbF = 8
-pinMbB = 7
-EnableA = 21
-EnableB = 20
-pinTrigger = 17 
-pinEcho = 18
+class Driver():
+    def __init__(self, 
+            pinMotorAForward,
+            pinMotorABackward,
+            pinMotorBForward,
+            pinMotorBBackward,
+            pinMotorAEnable,
+            pinMotorBEnable
+            )
 
-# How many times to turn the pin on and off each second
-Frequency = 20
-# How long the pin stays on each cycle, as a percent (here, it's 30%)
-DutyCycle = 30
-# Setting the duty cycle to 0 means the motors will not turn
-Stop = 0
+    # Set variables for the GPIO motor pins
+    self.pinMaF = pinMotorAForward # 10
+    self.pinMaB = pinMotorABackward # 9
+    self.pinMbF = pinMotorBForward # 8
+    self.pinMbB = pinMotorBBackward # 7
+    self.EnableA = pinMotorAEnable # 21
+    self.EnableB = pinMotorBEnable # 20
 
-# Set the GPIO Pin mode to be Output
-GPIO.setup(pinMaF, GPIO.OUT)
-GPIO.setup(pinMaB, GPIO.OUT)
-GPIO.setup(pinMbF, GPIO.OUT)
-GPIO.setup(pinMbB, GPIO.OUT)
-GPIO.setup(EnableA, GPIO.OUT)
-GPIO.setup(EnableB, GPIO.OUT)
+    # How many times to turn the pin on and off each second
+    self.Frequency = 20
+    # How long the pin stays on each cycle, as a percent (here, it's 30%)
+    self.DutyCycle = 30
+    # Setting the duty cycle to 0 means the motors will not turn
+    self.Stop = 0
 
-# Set the GPIO to software PWM at 'Frequency' Hertz
-pwmMaF = GPIO.PWM(pinMaF, Frequency)
-pwmMaB = GPIO.PWM(pinMaB, Frequency)
-pwmMbF = GPIO.PWM(pinMbF, Frequency)
-pwmMbB = GPIO.PWM(pinMbB, Frequency)
+    # Time for obstacle avoid operations
+    self.Treverse = 2
+    self.Tturn = 2 
 
-# Start the software PWM with a duty cycle of 0 (i.e. not moving)
-pwmMaF.start(Stop)
-pwmMaB.start(Stop)
-pwmMbF.start(Stop)
-pwmMbB.start(Stop)
+    def GPIOsetup(self):
+        # Set the GPIO Pin mode to be Output
+        GPIO.setup(self.pinMaF, GPIO.OUT)
+        GPIO.setup(self.pinMaB, GPIO.OUT)
+        GPIO.setup(self.pinMbF, GPIO.OUT)
+        GPIO.setup(self.pinMbB, GPIO.OUT)
+        GPIO.setup(self.EnableA, GPIO.OUT)
+        GPIO.setup(self.EnableB, GPIO.OUT)
 
-# Time for obstacle avoid operations
-Treverse = 2
-Tturn = 2 
+        # Set the GPIO to software PWM at 'Frequency' Hertz
+        pwmMaF = GPIO.PWM(self.pinMaF, Frequency)
+        pwmMaB = GPIO.PWM(self.pinMaB, Frequency)
+        pwmMbF = GPIO.PWM(self.pinMbF, Frequency)
+        pwmMbB = GPIO.PWM(self.pinMbB, Frequency)
 
-#distance = None
-#command = None 
-
-def Enable ():  
- GPIO.output(EnableA, 1)
- GPIO.output(EnableB, 1)
-
-# Turn all motors off
-def StopMotors():
-    pwmMaF.ChangeDutyCycle(Stop)
-    pwmMaB.ChangeDutyCycle(Stop)
-    pwmMbF.ChangeDutyCycle(Stop)
-    pwmMbB.ChangeDutyCycle(Stop)
-
-# Turn both motors forwards
-def Forwards():
-    pwmMaF.ChangeDutyCycle(DutyCycle)
-    pwmMaB.ChangeDutyCycle(Stop)
-    pwmMbF.ChangeDutyCycle(DutyCycle)
-    pwmMbB.ChangeDutyCycle(Stop)
-
-# Turn both motors backwards
-def Backwards():
-    pwmMaF.ChangeDutyCycle(Stop)
-    pwmMaB.ChangeDutyCycle(DutyCycle)
-    pwmMbF.ChangeDutyCycle(Stop)
-    pwmMbB.ChangeDutyCycle(DutyCycle)
-
-# Turn left
-def Left():
-    pwmMaF.ChangeDutyCycle(Stop)
-    pwmMaB.ChangeDutyCycle(DutyCycle)
-    pwmMbF.ChangeDutyCycle(DutyCycle)
-    pwmMbB.ChangeDutyCycle(Stop)
-
-# Turn Right
-def Right():
-    pwmMaF.ChangeDutyCycle(DutyCycle)
-    pwmMaB.ChangeDutyCycle(Stop)
-    pwmMbF.ChangeDutyCycle(Stop)
-    pwmMbB.ChangeDutyCycle(DutyCycle)
+        # Start the software PWM with a duty cycle of 0 (i.e. not moving)
+        pwmMaF.start(self.Stop)
+        pwmMaB.start(self.Stop)
+        pwmMbF.start(self.Stop)
+        pwmMbB.start(self.Stop)
 
 
-# Message handler
-def CommandCallback(commandMessage):
-    command = commandMessage.data
-    Enable()
-    if command == 'F':
-        print('Moving forwards')
-        Forwards()
-    elif command == 'B':
-        print('Moving backwards')
-        Backwards()
-    elif command == 'L':
-        print('Turning left')
-        Left()
-    elif command == 'R':
-        print('Turning right')
-        Right()
-    elif command == 'S':
-        print('Stopping')
-        StopMotors()
-    else:
-        print('Unknown command, stopping instead')
-        StopMotors()
+    def Enable ():  
+     GPIO.output(self.EnableA, 1)
+     GPIO.output(self.EnableB, 1)
+
+    # Turn all motors off
+    def StopMotors():
+        pwmMaF.ChangeDutyCycle(self.Stop)
+        pwmMaB.ChangeDutyCycle(self.Stop)
+        pwmMbF.ChangeDutyCycle(self.Stop)
+        pwmMbB.ChangeDutyCycle(self.Stop)
+
+    # Turn both motors forwards
+    def Forwards():
+        pwmMaF.ChangeDutyCycle(self.DutyCycle)
+        pwmMaB.ChangeDutyCycle(self.Stop)
+        pwmMbF.ChangeDutyCycle(self.DutyCycle)
+        pwmMbB.ChangeDutyCycle(self.Stop)
+
+    # Turn both motors backwards
+    def Backwards():
+        pwmMaF.ChangeDutyCycle(self.Stop)
+        pwmMaB.ChangeDutyCycle(self.DutyCycle)
+        pwmMbF.ChangeDutyCycle(self.Stop)
+        pwmMbB.ChangeDutyCycle(self.DutyCycle)
+
+    # Turn left
+    def Left():
+        pwmMaF.ChangeDutyCycle(self.Stop)
+        pwmMaB.ChangeDutyCycle(self.DutyCycle)
+        pwmMbF.ChangeDutyCycle(self.DutyCycle)
+        pwmMbB.ChangeDutyCycle(self.Stop)
+
+    # Turn Right
+    def Right():
+        pwmMaF.ChangeDutyCycle(self.DutyCycle)
+        pwmMaB.ChangeDutyCycle(self.Stop)
+        pwmMbF.ChangeDutyCycle(self.Stop)
+        pwmMbB.ChangeDutyCycle(self.DutyCycle)
 
 
-# Message handler
-def Callback(commandMessage, distanceMessage):
-#def Callback(): 
-    print('OK')
+    # # Message handler
+    # def CommandCallback(commandMessage):
+    #     command = commandMessage.data
+    #     self.Enable()
+    #     if command == 'F':
+    #         print('Moving forwards')
+    #         self.Forwards()
+    #     elif command == 'B':
+    #         print('Moving backwards')
+    #         self.Backwards()
+    #     elif command == 'L':
+    #         print('Turning left')
+    #         self.Left()
+    #     elif command == 'R':
+    #         print('Turning right')
+    #         self.Right()
+    #     elif command == 'S':
+    #         print('Stopping')
+    #         self.StopMotors()
+    #     else:
+    #         print('Unknown command, stopping instead')
+    #         self.StopMotors()
 
-    print(commandMessage, type(commandMessage))
-    print(distanceMessage, type(distanceMessage))
 
-    command = commandMessage.data
-    distance = distanceMessage.data
+    # Message handler
+    def Callback(commandMessage, distanceMessage):
+    #def Callback(): 
+        print('OK')
+
+        print(commandMessage, type(commandMessage))
+        print(distanceMessage, type(distanceMessage))
+
+        command = commandMessage.data
+        distance = distanceMessage.data
 
 
-    Enable()
+        Enable()
 
-    if distance < 20:
-        # print('Moving forwards')
-        # Forwards()
-        ObstacleAvoid()
+        if distance < 20:
+            # print('Moving forwards')
+            # Forwards()
+            self.ObstacleAvoid()
 
-    else:
-
-        if command == 'F':
-            print('Moving forwards')
-            Forwards()
-        elif command == 'B':
-            print('Moving backwards')
-            Backwards()
-        elif command == 'L':
-            print('Turning left')
-            Left()
-        elif command == 'R':
-            print('Turning right')
-            Right()
-        elif command == 'S':
-            print('Stopping')
-            StopMotors()
         else:
-            print('Unknown command, stopping instead')
-            StopMotors()
+
+            if command == 'F':
+                print('Moving forwards')
+                self.Forwards()
+            elif command == 'B':
+                print('Moving backwards')
+                self.Backwards()
+            elif command == 'L':
+                print('Turning left')
+                self.Left()
+            elif command == 'R':
+                print('Turning right')
+                self.Right()
+            elif command == 'S':
+                print('Stopping')
+                self.StopMotors()
+            else:
+                print('Unknown command, stopping instead')
+                self.StopMotors()
 
 
-def callback(data):
-    
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    # def callback(data):
+        
+    #     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
-    command = data.data
+    #     command = data.data
 
-    Enable()
+    #     Enable()
 
-    if command < 20:
-        # print('Moving forwards')
-        # Forwards()
-        ObstacleAvoid()
-    else:
-        print('Moving forwards')
-        Forwards()
-
-
-# def storeCommand(data):
-#     global command 
-#     command = data.data
-
-# def storeDistance(data):
-#     global distance
-#     distance = data.data
+    #     if command < 20:
+    #         # print('Moving forwards')
+    #         # Forwards()
+    #         self.ObstacleAvoid()
+    #     else:
+    #         print('Moving forwards')
+    #         self.Forwards()
 
 
-def ObstacleAvoid(): 
-    # Back off a little 
-    inittime = time.time() 
-    now = time.time() 
+    # def storeCommand(data):
+    #     global command 
+    #     command = data.data
 
-    print("Reversing...") 
-    while (now - inittime) <= Treverse:    
-        Backwards() 
+    # def storeDistance(data):
+    #     global distance
+    #     distance = data.data
+
+
+    def ObstacleAvoid(): 
+        # Back off a little 
+        inittime = time.time() 
         now = time.time() 
 
-    StopMotors() 
-    inittime = time.time() 
-    now = time.time() 
+        print("Reversing...") 
+        while (now - inittime) <= Treverse:    
+            self.Backwards() 
+            now = time.time() 
 
-    print("Turning...") 
-    while (now - inittime) <= Tturn:
-        Right() 
+        self.StopMotors() 
+        inittime = time.time() 
         now = time.time() 
 
-    StopMotors() 
+        print("Turning...") 
+        while (now - inittime) <= Tturn:
+            self.Right() 
+            now = time.time() 
+
+        self.StopMotors() 
 
 
-rospy.init_node('driver')
+    def driver(self):
+
+        rospy.init_node('driver')
+        # command = message_filters.Subscriber('command', String)
+        # distance = message_filters.Subscriber('distance_sense', Float64)
+        # ts = message_filters.ApproximateTimeSynchronizer([command, distance], 5, 1, allow_headerless=True)
+        # ts.registerCallback(Callback)
+        rospy.spin()
+
 
 # rospy.Subscriber('command', String, CommandCallback)
 
 # rospy.Subscriber("distance_sense", Float64, callback)
 
 
-command = message_filters.Subscriber('command', String)
-distance = message_filters.Subscriber('distance_sense', Float64)
-ts = message_filters.ApproximateTimeSynchronizer([command, distance], 5, 1, allow_headerless=True)
-ts.registerCallback(Callback)
+
 
 # msgCommand = rospy.Subscriber('command', String)
 # print(msgCommand.data, type(msgCommand.data))
@@ -230,8 +242,17 @@ ts.registerCallback(Callback)
 # Callback(msgCommand, msgDistance)
 #Callback()
 
-rospy.spin()
+if __name__ == '__main__':
+    driver = Driver(10, 9, 8, 7, 21, 20)
+    try:
+        driver.driver()
+    except rospy.ROSInterruptException:
+        pass
+    except KeyboardInterrupt:
+        # Reset GPIO settings 
+        print('Shutting down: stopping motors')
+        StopMotors()
+        GPIO.cleanup()
+        sys.exit()
 
-print('Shutting down: stopping motors')
-StopMotors()
-GPIO.cleanup()
+
