@@ -6,6 +6,7 @@ from std_msgs.msg import Float64
 import RPi.GPIO as GPIO
 import time
 from time import sleep
+import message_filters
 # Set the GPIO modes
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -50,6 +51,9 @@ pwmMbB.start(Stop)
 # Time for obstacle avoid operations
 Treverse = 2
 Tturn = 2 
+
+#distance = None
+#command = None 
 
 def Enable ():  
  GPIO.output(EnableA, 1)
@@ -116,8 +120,8 @@ def CommandCallback(commandMessage):
 
 
 # Message handler
-#def Callback(commandMessage, distanceMessage):
-def Callback(): 
+def Callback(commandMessage, distanceMessage):
+#def Callback(): 
 
     Enable()
 
@@ -165,13 +169,13 @@ def callback(data):
         Forwards()
 
 
-def storeCommand(data):
-    global command 
-    command = data.data
+# def storeCommand(data):
+#     global command 
+#     command = data.data
 
-def storeDistance(data):
-    global distance
-    distance = data.data
+# def storeDistance(data):
+#     global distance
+#     distance = data.data
 
 
 def ObstacleAvoid(): 
@@ -202,9 +206,11 @@ rospy.init_node('driver')
 
 # rospy.Subscriber("distance_sense", Float64, callback)
 
-rospy.Subscriber('command', String, storeCommand)
 
-rospy.Subscriber("distance_sense", Float64, storeDistance)
+command = message_filters.Subscriber('command', String)
+distance = message_filters.Subscriber("distance_sense", Float64)
+ts = message_filters.TimeSynchronizer([command, distance], 10)
+ts.registerCallback(Callback)
 
 # msgCommand = rospy.Subscriber('command', String)
 # print(msgCommand.data, type(msgCommand.data))
@@ -214,7 +220,7 @@ rospy.Subscriber("distance_sense", Float64, storeDistance)
 
 
 # Callback(msgCommand, msgDistance)
-Callback()
+#Callback()
 
 rospy.spin()
 
