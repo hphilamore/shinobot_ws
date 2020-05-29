@@ -115,17 +115,20 @@ def CommandCallback(commandMessage):
         StopMotors()
 
 def callback(data):
+    
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
     command = data.data
+
     Enable()
+
     if command < 20:
         # print('Moving forwards')
         # Forwards()
         ObstacleAvoid()
     else:
-        print('Moving backwards')
-        Backwards()
+        print('Moving forwards')
+        Forwards()
 
 
 def ObstacleAvoid(): 
@@ -133,8 +136,8 @@ def ObstacleAvoid():
     inittime = time.time() 
     now = time.time() 
 
-    while (now - inittime) <= Treverse:
-        print("Reversing...") 
+    print("Reversing...") 
+    while (now - inittime) <= Treverse:    
         Backwards() 
         now = time.time() 
 
@@ -142,8 +145,8 @@ def ObstacleAvoid():
     inittime = time.time() 
     now = time.time() 
 
+    print("Turning...") 
     while (now - inittime) <= Tturn:
-        print("Turning...") 
         Right() 
         now = time.time() 
 
