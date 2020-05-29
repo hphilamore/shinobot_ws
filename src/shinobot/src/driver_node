@@ -118,7 +118,7 @@ def CommandCallback(commandMessage):
 # Message handler
 def Callback(commandMessage, distanceMessage):
     command = commandMessage
-    distance = distanceMessage
+    distance = distanceMessage  
 
     Enable()
 
@@ -195,13 +195,14 @@ rospy.init_node('driver')
 #rospy.Subscriber("distance_sense", Float64, callback)
 
 msgCommand = rospy.Subscriber('command', String)
-print(msgCommand, type(msgCommand))
+print(msgCommand.data, type(msgCommand.data))
 msgDistance = rospy.Subscriber("distance_sense", Float64)
-print(msgDistance, type(msgDistance))
+print(msgDistance.data, type(msgDistance.data))
 
 Callback(msgCommand, msgDistance)
 
 rospy.spin()
+
 print('Shutting down: stopping motors')
 StopMotors()
 GPIO.cleanup()
