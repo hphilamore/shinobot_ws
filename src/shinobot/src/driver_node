@@ -133,7 +133,7 @@ def ObstacleAvoid():
     inittime = time.time() 
     now = time.time() 
 
-    while  now - inittime <= Treverse:
+    while (now - inittime) <= Treverse:
         print("Reversing...") 
         Backwards() 
         now = time.time() 
@@ -142,7 +142,7 @@ def ObstacleAvoid():
     inittime = time.time() 
     now = time.time() 
 
-     while  now - inittime <= Tturn:
+    while (now - inittime) <= Tturn:
         print("Turning...") 
         Right() 
         now = time.time() 
