@@ -132,12 +132,12 @@ def ObstacleAvoid():
     print("Backwards") 
     Backwards() 
     sleep(Treverse) 
-    stopmotors() 
+    StopMotors() 
     # Turn right 
     print("Right") 
     Right() 
     sleep(Tturn) 
-    stopmotors() 
+    StopMotors() 
 
 
 rospy.init_node('driver')
