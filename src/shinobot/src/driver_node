@@ -117,8 +117,8 @@ def CommandCallback(commandMessage):
 
 # Message handler
 def Callback(commandMessage, distanceMessage):
-    command = commandMessage.data
-    distance = distanceMessage.data
+    command = commandMessage
+    distance = distanceMessage
 
     Enable()
 
