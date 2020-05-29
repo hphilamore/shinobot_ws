@@ -120,7 +120,7 @@ def CommandCallback(commandMessage):
 
 
 # Message handler
-def Callback(commandMessage, distanceMessage):
+def Callback(command, distance):
 #def Callback(): 
 
     Enable()
@@ -209,7 +209,7 @@ rospy.init_node('driver')
 
 command = message_filters.Subscriber('command', String)
 distance = message_filters.Subscriber('distance_sense', Float64)
-ts = message_filters.ApproximateTimeSynchronizer([command, distance], 10, 0.1, allow_headerless=True)
+ts = message_filters.ApproximateTimeSynchronizer([command, distance], 1, 0.1, allow_headerless=True)
 ts.registerCallback(Callback)
 
 # msgCommand = rospy.Subscriber('command', String)
