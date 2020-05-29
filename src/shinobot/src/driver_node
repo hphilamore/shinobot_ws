@@ -130,12 +130,12 @@ def callback(data):
 def ObstacleAvoid(): 
     # Back off a little 
     print("Backwards") 
-    backwards() 
+    Backwards() 
     time.sleep(Treverse) 
     stopmotors() 
     # Turn right 
     print("Right") 
-    right() 
+    Right() 
     time.sleep(Tturn) 
     stopmotors() 
 
