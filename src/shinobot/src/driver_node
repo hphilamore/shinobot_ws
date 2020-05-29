@@ -46,6 +46,10 @@ pwmMaB.start(Stop)
 pwmMbF.start(Stop)
 pwmMbB.start(Stop)
 
+# Time for obstacle avoid operations
+Treverse = 2
+Tturn = 2 
+
 def Enable ():  
  GPIO.output(EnableA, 1)
  GPIO.output(EnableB, 1)
@@ -115,11 +119,25 @@ def callback(data):
     command = data.data
     Enable()
     if command < 20:
-        print('Moving forwards')
-        Forwards()
+        # print('Moving forwards')
+        # Forwards()
+        ObstacleAvoid()
     else:
         print('Moving backwards')
         Backwards()
+
+
+def ObstacleAvoid(): 
+    # Back off a little 
+    print("Backwards") 
+    backwards() 
+    time.sleep(Treverse) 
+    stopmotors() 
+    # Turn right 
+    print("Right") 
+    right() 
+    time.sleep(Tturn) 
+    stopmotors() 
 
 
 rospy.init_node('driver')
