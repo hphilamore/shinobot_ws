@@ -4,6 +4,7 @@ import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float64
 import RPi.GPIO as GPIO
+import time
 from time import sleep
 # Set the GPIO modes
 GPIO.setmode(GPIO.BCM)
@@ -129,14 +130,23 @@ def callback(data):
 
 def ObstacleAvoid(): 
     # Back off a little 
-    print("Backwards") 
-    Backwards() 
-    sleep(Treverse) 
+    inittime = time.time() 
+    now = time.time() 
+
+    while  now - inittime <= Treverse:
+        print("Reversing...") 
+        Backwards() 
+        now = time.time() 
+
     StopMotors() 
-    # Turn right 
-    print("Right") 
-    Right() 
-    sleep(Tturn) 
+    inittime = time.time() 
+    now = time.time() 
+
+     while  now - inittime <= Tturn:
+        print("Turning...") 
+        Right() 
+        now = time.time() 
+
     StopMotors() 
 
 
