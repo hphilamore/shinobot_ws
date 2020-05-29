@@ -120,8 +120,15 @@ def CommandCallback(commandMessage):
 
 
 # Message handler
-def Callback(command, distance):
+def Callback(commandMessage, distanceMessage):
 #def Callback(): 
+    print('OK')
+
+    print(commandMessage, type(commandMessage))
+
+    command = commandMessage.data
+    distance = distanceMessage.data
+
 
     Enable()
 
