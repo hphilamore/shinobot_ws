@@ -114,6 +114,41 @@ def CommandCallback(commandMessage):
         print('Unknown command, stopping instead')
         StopMotors()
 
+
+# Message handler
+def Callback(commandMessage, distanceMessage):
+    command = commandMessage.data
+    distance = distanceMessage.data
+
+    Enable()
+
+    if distance < 20:
+        # print('Moving forwards')
+        # Forwards()
+        ObstacleAvoid()
+
+    else:
+
+        if command == 'F':
+            print('Moving forwards')
+            Forwards()
+        elif command == 'B':
+            print('Moving backwards')
+            Backwards()
+        elif command == 'L':
+            print('Turning left')
+            Left()
+        elif command == 'R':
+            print('Turning right')
+            Right()
+        elif command == 'S':
+            print('Stopping')
+            StopMotors()
+        else:
+            print('Unknown command, stopping instead')
+            StopMotors()
+
+
 def callback(data):
     
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
@@ -157,7 +192,12 @@ rospy.init_node('driver')
 
 #rospy.Subscriber('command', String, CommandCallback)
 
-rospy.Subscriber("distance_sense", Float64, callback)
+#rospy.Subscriber("distance_sense", Float64, callback)
+
+msgCommand = rospy.Subscriber('command', String)
+msgDistance = rospy.Subscriber("distance_sense", Float64)
+
+Callback(msgCommand, msgDistance)
 
 rospy.spin()
 print('Shutting down: stopping motors')
