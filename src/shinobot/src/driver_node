@@ -202,9 +202,9 @@ rospy.init_node('driver')
 
 # rospy.Subscriber("distance_sense", Float64, callback)
 
-rospy.Subscriber('command', String, StoreCommand)
+rospy.Subscriber('command', String, storeCommand)
 
-rospy.Subscriber("distance_sense", Float64, StoreDistance)
+rospy.Subscriber("distance_sense", Float64, storeDistance)
 
 # msgCommand = rospy.Subscriber('command', String)
 # print(msgCommand.data, type(msgCommand.data))
