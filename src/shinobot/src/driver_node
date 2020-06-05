@@ -40,6 +40,9 @@ class Driver():
     self.Treverse = 2
     self.Tturn = 2 
 
+    self.command = 'S'
+    self.distance = None 
+
     def GPIOsetup(self):
         # Set the GPIO Pin mode to be Output
         GPIO.setup(self.pinMaF, GPIO.OUT)
@@ -62,40 +65,40 @@ class Driver():
         pwmMbB.start(self.Stop)
 
 
-    def Enable ():  
+    def Enable (self):  
      GPIO.output(self.EnableA, 1)
      GPIO.output(self.EnableB, 1)
 
     # Turn all motors off
-    def StopMotors():
+    def StopMotors(self):
         pwmMaF.ChangeDutyCycle(self.Stop)
         pwmMaB.ChangeDutyCycle(self.Stop)
         pwmMbF.ChangeDutyCycle(self.Stop)
         pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn both motors forwards
-    def Forwards():
+    def Forwards(self):
         pwmMaF.ChangeDutyCycle(self.DutyCycle)
         pwmMaB.ChangeDutyCycle(self.Stop)
         pwmMbF.ChangeDutyCycle(self.DutyCycle)
         pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn both motors backwards
-    def Backwards():
+    def Backwards(self):
         pwmMaF.ChangeDutyCycle(self.Stop)
         pwmMaB.ChangeDutyCycle(self.DutyCycle)
         pwmMbF.ChangeDutyCycle(self.Stop)
         pwmMbB.ChangeDutyCycle(self.DutyCycle)
 
     # Turn left
-    def Left():
+    def Left(self):
         pwmMaF.ChangeDutyCycle(self.Stop)
         pwmMaB.ChangeDutyCycle(self.DutyCycle)
         pwmMbF.ChangeDutyCycle(self.DutyCycle)
         pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn Right
-    def Right():
+    def Right(self):
         pwmMaF.ChangeDutyCycle(self.DutyCycle)
         pwmMaB.ChangeDutyCycle(self.Stop)
         pwmMbF.ChangeDutyCycle(self.Stop)
@@ -125,9 +128,14 @@ class Driver():
     #         print('Unknown command, stopping instead')
     #         self.StopMotors()
 
+    def storeCommand(self, data):
+        self.command = data.data
+
+    def storeDistance(self, data):
+        self.distance = data.data
 
     # Message handler
-    def Callback(commandMessage, distanceMessage):
+    def Callback(self, commandMessage, distanceMessage):
     #def Callback(): 
         print('OK')
 
@@ -193,7 +201,7 @@ class Driver():
     #     distance = data.data
 
 
-    def ObstacleAvoid(): 
+    def ObstacleAvoid(self): 
         # Back off a little 
         inittime = time.time() 
         now = time.time() 
@@ -218,6 +226,8 @@ class Driver():
     def driver(self):
 
         rospy.init_node('driver')
+        rospy.Subscriber('command', String, storeCommand)
+        rospy.Subscriber('distance_sense', Float64, storeDistance)
         # command = message_filters.Subscriber('command', String)
         # distance = message_filters.Subscriber('distance_sense', Float64)
         # ts = message_filters.ApproximateTimeSynchronizer([command, distance], 5, 1, allow_headerless=True)
