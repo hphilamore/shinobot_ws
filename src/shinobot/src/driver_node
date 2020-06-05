@@ -18,8 +18,7 @@ class Driver():
             pinMotorBForward,
             pinMotorBBackward,
             pinMotorAEnable,
-            pinMotorBEnable
-            )
+            pinMotorBEnable)
 
     # Set variables for the GPIO motor pins
     self.pinMaF = pinMotorAForward # 10
