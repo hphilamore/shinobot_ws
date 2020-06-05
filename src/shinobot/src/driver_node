@@ -226,8 +226,8 @@ class Driver():
     def driver(self):
 
         rospy.init_node('driver')
-        rospy.Subscriber('command', String, storeCommand)
-        rospy.Subscriber('distance_sense', Float64, storeDistance)
+        rospy.Subscriber('command', String, self.storeCommand)
+        rospy.Subscriber('distance_sense', Float64, self.storeDistance)
         # command = message_filters.Subscriber('command', String)
         # distance = message_filters.Subscriber('distance_sense', Float64)
         # ts = message_filters.ApproximateTimeSynchronizer([command, distance], 5, 1, allow_headerless=True)
