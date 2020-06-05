@@ -18,29 +18,30 @@ class Driver():
             pinMotorBForward,
             pinMotorBBackward,
             pinMotorAEnable,
-            pinMotorBEnable)
+            pinMotorBEnable
+            ):
 
-    # Set variables for the GPIO motor pins
-    self.pinMaF = pinMotorAForward # 10
-    self.pinMaB = pinMotorABackward # 9
-    self.pinMbF = pinMotorBForward # 8
-    self.pinMbB = pinMotorBBackward # 7
-    self.EnableA = pinMotorAEnable # 21
-    self.EnableB = pinMotorBEnable # 20
+        # Set variables for the GPIO motor pins
+        self.pinMaF = pinMotorAForward # 10
+        self.pinMaB = pinMotorABackward # 9
+        self.pinMbF = pinMotorBForward # 8
+        self.pinMbB = pinMotorBBackward # 7
+        self.EnableA = pinMotorAEnable # 21
+        self.EnableB = pinMotorBEnable # 20
 
-    # How many times to turn the pin on and off each second
-    self.Frequency = 20
-    # How long the pin stays on each cycle, as a percent (here, it's 30%)
-    self.DutyCycle = 30
-    # Setting the duty cycle to 0 means the motors will not turn
-    self.Stop = 0
+        # How many times to turn the pin on and off each second
+        self.Frequency = 20
+        # How long the pin stays on each cycle, as a percent (here, it's 30%)
+        self.DutyCycle = 30
+        # Setting the duty cycle to 0 means the motors will not turn
+        self.Stop = 0
 
-    # Time for obstacle avoid operations
-    self.Treverse = 2
-    self.Tturn = 2 
+        # Time for obstacle avoid operations
+        self.Treverse = 2
+        self.Tturn = 2 
 
-    self.command = 'S'
-    self.distance = None 
+        self.command = 'S'
+        self.distance = None 
 
     def GPIOsetup(self):
         # Set the GPIO Pin mode to be Output
