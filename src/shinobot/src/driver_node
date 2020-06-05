@@ -43,6 +43,8 @@ class Driver():
         self.command = 'S'
         self.distance = None 
 
+        self.GPIOsetup()
+
     def GPIOsetup(self):
         # Set the GPIO Pin mode to be Output
         GPIO.setup(self.pinMaF, GPIO.OUT)
@@ -53,16 +55,16 @@ class Driver():
         GPIO.setup(self.EnableB, GPIO.OUT)
 
         # Set the GPIO to software PWM at 'Frequency' Hertz
-        pwmMaF = GPIO.PWM(self.pinMaF, Frequency)
-        pwmMaB = GPIO.PWM(self.pinMaB, Frequency)
-        pwmMbF = GPIO.PWM(self.pinMbF, Frequency)
-        pwmMbB = GPIO.PWM(self.pinMbB, Frequency)
+        self.pwmMaF = GPIO.PWM(self.pinMaF, self.Frequency)
+        self.pwmMaB = GPIO.PWM(self.pinMaB, self.Frequency)
+        self.pwmMbF = GPIO.PWM(self.pinMbF, self.Frequency)
+        self.pwmMbB = GPIO.PWM(self.pinMbB, self.Frequency)
 
         # Start the software PWM with a duty cycle of 0 (i.e. not moving)
-        pwmMaF.start(self.Stop)
-        pwmMaB.start(self.Stop)
-        pwmMbF.start(self.Stop)
-        pwmMbB.start(self.Stop)
+        self.pwmMaF.start(self.Stop)
+        self.pwmMaB.start(self.Stop)
+        self.pwmMbF.start(self.Stop)
+        self.pwmMbB.start(self.Stop)
 
 
     def Enable (self):  
@@ -71,38 +73,38 @@ class Driver():
 
     # Turn all motors off
     def StopMotors(self):
-        pwmMaF.ChangeDutyCycle(self.Stop)
-        pwmMaB.ChangeDutyCycle(self.Stop)
-        pwmMbF.ChangeDutyCycle(self.Stop)
-        pwmMbB.ChangeDutyCycle(self.Stop)
+        self.pwmMaF.ChangeDutyCycle(self.Stop)
+        self.pwmMaB.ChangeDutyCycle(self.Stop)
+        self.pwmMbF.ChangeDutyCycle(self.Stop)
+        self.pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn both motors forwards
     def Forwards(self):
-        pwmMaF.ChangeDutyCycle(self.DutyCycle)
-        pwmMaB.ChangeDutyCycle(self.Stop)
-        pwmMbF.ChangeDutyCycle(self.DutyCycle)
-        pwmMbB.ChangeDutyCycle(self.Stop)
+        self.pwmMaF.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMaB.ChangeDutyCycle(self.Stop)
+        self.pwmMbF.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn both motors backwards
     def Backwards(self):
-        pwmMaF.ChangeDutyCycle(self.Stop)
-        pwmMaB.ChangeDutyCycle(self.DutyCycle)
-        pwmMbF.ChangeDutyCycle(self.Stop)
-        pwmMbB.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMaF.ChangeDutyCycle(self.Stop)
+        self.pwmMaB.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMbF.ChangeDutyCycle(self.Stop)
+        self.pwmMbB.ChangeDutyCycle(self.DutyCycle)
 
     # Turn left
     def Left(self):
-        pwmMaF.ChangeDutyCycle(self.Stop)
-        pwmMaB.ChangeDutyCycle(self.DutyCycle)
-        pwmMbF.ChangeDutyCycle(self.DutyCycle)
-        pwmMbB.ChangeDutyCycle(self.Stop)
+        self.pwmMaF.ChangeDutyCycle(self.Stop)
+        self.pwmMaB.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMbF.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMbB.ChangeDutyCycle(self.Stop)
 
     # Turn Right
     def Right(self):
-        pwmMaF.ChangeDutyCycle(self.DutyCycle)
-        pwmMaB.ChangeDutyCycle(self.Stop)
-        pwmMbF.ChangeDutyCycle(self.Stop)
-        pwmMbB.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMaF.ChangeDutyCycle(self.DutyCycle)
+        self.pwmMaB.ChangeDutyCycle(self.Stop)
+        self.pwmMbF.ChangeDutyCycle(self.Stop)
+        self.pwmMbB.ChangeDutyCycle(self.DutyCycle)
 
 
     # # Message handler
