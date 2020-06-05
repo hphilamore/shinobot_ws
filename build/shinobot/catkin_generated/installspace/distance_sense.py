@@ -2,6 +2,7 @@
 # license removed for brevity
 import rospy
 from std_msgs.msg import String
+from std_msgs.msg import Float64
 import RPi.GPIO as GPIO
 import time
 import sys
@@ -75,7 +76,7 @@ class DistanceSensor():
 
     def talker(self):
         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher('distance_sense', int64)
+        pub = rospy.Publisher('distance_sense', Float64)
         rospy.init_node('distance_sense', anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
