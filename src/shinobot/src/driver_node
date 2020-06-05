@@ -137,7 +137,7 @@ class Driver():
         rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
         self.distance = data.data
         print(self.distance)
-        
+
     # Message handler
     def Callback(self, commandMessage, distanceMessage):
     #def Callback(): 
@@ -226,12 +226,16 @@ class Driver():
 
         self.StopMotors() 
 
+    def test(self):
+        print("test")
+
 
     def driver(self):
 
         rospy.init_node('driver')
         rospy.Subscriber('command', String, self.storeCommand)
         rospy.Subscriber('distance_sense', Float64, self.storeDistance)
+        self.test()
         #print(self.command)
         #print(self.distance) 
         # command = message_filters.Subscriber('command', String)
