@@ -228,8 +228,8 @@ class Driver():
     def driver(self):
 
         rospy.init_node('driver')
-        rospy.Subscriber('command', String, self.storeCommand)
-        rospy.Subscriber('distance_sense', Float64, self.storeDistance)
+        rospy.Subscriber('command', String, self.storeCommand, queue_size=None)
+        rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=None)
         #self.test()
         #print(self.command)
         #print(self.distance) 
