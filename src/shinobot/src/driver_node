@@ -129,9 +129,11 @@ class Driver():
     #         self.StopMotors()
 
     def storeCommand(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
         self.command = data.data
 
     def storeDistance(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
         self.distance = data.data
 
     # Message handler
