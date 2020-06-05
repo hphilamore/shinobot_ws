@@ -132,46 +132,39 @@ class Driver():
         rospy.loginfo(rospy.get_caller_id() + "Command is %s", data.data)
         self.command = data.data
         print(self.command, self.distance)
+        self.callback()
 
     def storeDistance(self, data):
         rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
         self.distance = data.data
         print(self.distance, self.command)
+        self.callback()
 
     # Message handler
-    def Callback(self, commandMessage, distanceMessage):
-    #def Callback(): 
-        print('OK')
-
-        print(commandMessage, type(commandMessage))
-        print(distanceMessage, type(distanceMessage))
-
-        command = commandMessage.data
-        distance = distanceMessage.data
-
+    def callback(self):
 
         Enable()
 
-        if distance < 20:
+        if self.distance < 20:
             # print('Moving forwards')
             # Forwards()
             self.ObstacleAvoid()
 
         else:
 
-            if command == 'F':
+            if self.command == 'F':
                 print('Moving forwards')
                 self.Forwards()
-            elif command == 'B':
+            elif self.command == 'B':
                 print('Moving backwards')
                 self.Backwards()
-            elif command == 'L':
+            elif self.command == 'L':
                 print('Turning left')
                 self.Left()
-            elif command == 'R':
+            elif self.command == 'R':
                 print('Turning right')
                 self.Right()
-            elif command == 'S':
+            elif self.command == 'S':
                 print('Stopping')
                 self.StopMotors()
             else:
@@ -205,13 +198,13 @@ class Driver():
     #     distance = data.data
 
 
-    def ObstacleAvoid(self): 
+    def obstacleAvoid(self): 
         # Back off a little 
         inittime = time.time() 
         now = time.time() 
 
         print("Reversing...") 
-        while (now - inittime) <= Treverse:    
+        while (now - inittime) <= self.Treverse:    
             self.Backwards() 
             now = time.time() 
 
@@ -220,7 +213,7 @@ class Driver():
         now = time.time() 
 
         print("Turning...") 
-        while (now - inittime) <= Tturn:
+        while (now - inittime) <= self.Tturn:
             self.Right() 
             now = time.time() 
 
