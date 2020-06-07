@@ -11,7 +11,7 @@ import sys
 GPIO.setmode(GPIO.BCM)
 
 class DistanceSensor():
-    def __init__(self, pinTrigger, pinEcho, msg_name):
+    def __init__(self, pinTrigger, pinEcho):
         self.pinTrigger = pinTrigger
         self.pinEcho = pinEcho
         self.GPIOsetup()
@@ -76,8 +76,8 @@ class DistanceSensor():
 
     def talker(self):
         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher(msg_name, Float64)
-        rospy.init_node(msg_name, anonymous=True)
+        pub = rospy.Publisher('distance_sense', Float64)
+        rospy.init_node('distance_sense', anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             # hello_str = "hello world %s" % rospy.get_time()
@@ -88,7 +88,7 @@ class DistanceSensor():
             rate.sleep()
 
 if __name__ == '__main__':
-    dist_sense = DistanceSensor(17, 18, 'distance_sense')
+    DistSense = DistanceSensor(17, 18)
     try:
         DistSense.talker()
     except rospy.ROSInterruptException:
