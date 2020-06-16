@@ -92,31 +92,31 @@ class Driver():
     # Message handler
     def callback(self):
 
-        # if self.distance < 20:
-        #     # print('Moving forwards')
-        #     # Forwards()
-        #     self.obstacleAvoid()
+        if self.distance < 20:
+            # print('Moving forwards')
+            # Forwards()
+            self.obstacleAvoid()
 
-        # else:
-
-        if self.command == 'F':
-            print('Moving forwards')
-            self.Forwards()
-        elif self.command == 'B':
-            print('Moving backwards')
-            self.Backwards()
-        elif self.command == 'L':
-            print('Turning left')
-            self.Left()
-        elif self.command == 'R':
-            print('Turning right')
-            self.Right()
-        elif self.command == 'S':
-            print('Stopping')
-            self.Stop()
         else:
-            print('Unknown command, stopping instead')
-            self.Stop()
+
+            if self.command == 'F':
+                print('Moving forwards')
+                self.Forwards()
+            elif self.command == 'B':
+                print('Moving backwards')
+                self.Backwards()
+            elif self.command == 'L':
+                print('Turning left')
+                self.Left()
+            elif self.command == 'R':
+                print('Turning right')
+                self.Right()
+            elif self.command == 'S':
+                print('Stopping')
+                self.Stop()
+            else:
+                print('Unknown command, stopping instead')
+                self.Stop()
 
 
 
