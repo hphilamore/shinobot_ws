@@ -1,4 +1,4 @@
-from __future__ import print_function
+#from __future__ import print_function
 import time
 from dual_g2_hpmd_rpi import motors, MAX_SPEED
 
