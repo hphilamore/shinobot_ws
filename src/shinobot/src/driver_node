@@ -35,35 +35,35 @@ class Driver():
 
     def Stop(self):
         motors.motor1.setSpeed( 0 )
-        #motors.motor2.setSpeed( 0 )
+        motors.motor2.setSpeed( 0 )
         raiseIfFault()
         sleep(0.002)
 
 
     def Forwards(self):
-        motors.motor1.setSpeed( MAX_SPEED/2 )
-        motors.motor2.setSpeed( MAX_SPEED/2 )
+        motors.motor1.setSpeed( MAX_SPEED/4 )
+        motors.motor2.setSpeed( MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
 
     def Backwards(self):
-        motors.motor1.setSpeed( -MAX_SPEED/2 )
-        motors.motor2.setSpeed( -MAX_SPEED/2 )
+        motors.motor1.setSpeed( -MAX_SPEED/4 )
+        motors.motor2.setSpeed( -MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
 
     def Left(self):
-        motors.motor1.setSpeed( MAX_SPEED/2 )
-        motors.motor2.setSpeed( MAX_SPEED/2 )
+        motors.motor1.setSpeed( MAX_SPEED/4 )
+        motors.motor2.setSpeed( MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
 
     def Right(self):
-        motors.motor1.setSpeed( -MAX_SPEED/2 )
-        motors.motor2.setSpeed( MAX_SPEED/2 )
+        motors.motor1.setSpeed( -MAX_SPEED/4 )
+        motors.motor2.setSpeed( MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
