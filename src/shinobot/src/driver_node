@@ -56,7 +56,7 @@ class Driver():
 
     def Left(self):
         motors.motor1.setSpeed( MAX_SPEED/4 )
-        motors.motor2.setSpeed( MAX_SPEED/4 )
+        motors.motor2.setSpeed( -MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
