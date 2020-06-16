@@ -14,6 +14,7 @@ class DistanceSensor():
     def __init__(self, pinTrigger, pinEcho, msg_name):
         self.pinTrigger = pinTrigger
         self.pinEcho = pinEcho
+        self.msg_name = msg_name
         self.GPIOsetup()
         self.timeout = 1    
 
@@ -76,8 +77,8 @@ class DistanceSensor():
 
     def talker(self):
         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher(msg_name, Float64)
-        rospy.init_node(msg_name, anonymous=True)
+        pub = rospy.Publisher(self.msg_name, Float64)
+        rospy.init_node(self.msg_name, anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             # hello_str = "hello world %s" % rospy.get_time()
