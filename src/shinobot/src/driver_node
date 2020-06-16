@@ -33,6 +33,14 @@ class Driver():
         # Set variables for the GPIO motor pins
         self.motors = Motors()
 
+        # Time for obstacle avoid operations
+        self.Treverse = 2
+        self.Tturn = 2 
+
+        # Control variables 
+        self.command = 'S'
+        self.distance = None 
+
     def Stop(self):
         motors.motor1.setSpeed( 0 )
         motors.motor2.setSpeed( 0 )
@@ -67,24 +75,28 @@ class Driver():
         raiseIfFault()
         sleep(0.002)
 
+        
+
 
 
 if __name__ == '__main__':
     driver = Driver()
     try:
-        print("OK")
-        driver.Forwards()
-        sleep(2)
-        driver.Backwards()
-        sleep(2)
-        driver.Left()
-        sleep(2)
-        driver.Right()
-        sleep(2)
-        driver.Stop()
-        sleep(2)
+        # print("OK")
+        # driver.Forwards()
+        # sleep(2)
+        # driver.Backwards()
+        # sleep(2)
+        # driver.Left()
+        # sleep(2)
+        # driver.Right()
+        # sleep(2)
+        # driver.Stop()
+        # sleep(2)
+
     except rospy.ROSInterruptException:
         pass
+
     except KeyboardInterrupt:
         # Reset GPIO settings 
         print('Shutting down: stopping motors')
