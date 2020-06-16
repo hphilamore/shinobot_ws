@@ -60,3 +60,15 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/listener.py")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/dual_g2_hpmd_rpi.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/example.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/setup.py")
+endif()
+
