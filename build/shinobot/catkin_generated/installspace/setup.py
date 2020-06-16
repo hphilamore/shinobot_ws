@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 from distutils.core import setup
 setup(name='dual_g2_hpmd_rpi',
       version='2.0.0',

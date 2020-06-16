@@ -23,6 +23,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/shinobot/shinobot_ws/src/shinobot/CMakeLists.txt"
   "/home/shinobot/shinobot_ws/src/shinobot/package.xml"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/distance_sense.py"
+  "/home/shinobot/shinobot_ws/src/shinobot/scripts/distance_sense_L.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/listener.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/pimoroni_motor_driver/example.py"

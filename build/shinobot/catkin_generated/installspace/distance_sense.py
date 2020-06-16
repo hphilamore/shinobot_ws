@@ -7,22 +7,25 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-# Set the GPIO modes
-GPIO.setmode(GPIO.BCM)
+# # Set the GPIO modes
+# GPIO.setmode(GPIO.BCM)
 
 class DistanceSensor():
     def __init__(self, pinTrigger, pinEcho, msg_name):
         self.pinTrigger = pinTrigger
         self.pinEcho = pinEcho
+        self.msg_name = msg_name
         self.GPIOsetup()
         self.timeout = 1    
 
     # Set the GPIO Pin modes 
     def GPIOsetup(self):
+        # Set the GPIO modes
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pinTrigger, GPIO.OUT) # Trigger
         GPIO.setup(self.pinEcho, GPIO.IN) # Echo
-     
 
+     
     # Take a distance measurement 
     def measure(self): 
         print("initialise distance sense") 
@@ -76,8 +79,8 @@ class DistanceSensor():
 
     def talker(self):
         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher(msg_name, Float64)
-        rospy.init_node(msg_name, anonymous=True)
+        pub = rospy.Publisher(self.msg_name, Float64)
+        rospy.init_node(self.msg_name, anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             # hello_str = "hello world %s" % rospy.get_time()
@@ -87,13 +90,14 @@ class DistanceSensor():
             pub.publish(self.measure())
             rate.sleep()
 
-if __name__ == '__main__':
-    dist_sense = DistanceSensor(17, 18, 'distance_sense')
-    try:
-        DistSense.talker()
-    except rospy.ROSInterruptException:
-        pass
-    except KeyboardInterrupt:
-        # Reset GPIO settings 
-        GPIO.cleanup()
-        sys.exit()
+
+# if __name__ == '__main__':
+#     dist_sense = DistanceSensor(17, 18, 'distance_sense')
+#     try:
+#         dist_sense.talker()
+#     except rospy.ROSInterruptException:
+#         pass
+#     except KeyboardInterrupt:
+#         # Reset GPIO settings 
+#         GPIO.cleanup()
+#         sys.exit()
