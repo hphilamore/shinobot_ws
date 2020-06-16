@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from __future__ import print_function
 import rospy
-from dual_g2_hpmd_rpi import motors, MAX_SPEED
+#import dual_g2_hpmd_rpi
+from dual_g2_hpmd_rpi import Motor, Motors, motors, MAX_SPEED
 import time
 from time import sleep
 from std_msgs.msg import String
@@ -26,6 +27,25 @@ test_forward_speeds = list(range(0, MAX_SPEED, 1)) + \
 test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
   [-MAX_SPEED] * 200 + list(range(-MAX_SPEED, 0, 1)) + [0]  
 
+class Driver():
+    def __init__(self):
+
+        # Set variables for the GPIO motor pins
+        self.motors = Motors()
+
+
+if __name__ == '__main__':
+    driver = Driver()
+    try:
+        print("OK")
+    except rospy.ROSInterruptException:
+        pass
+    except KeyboardInterrupt:
+        # Reset GPIO settings 
+        print('Shutting down: stopping motors')
+        #StopMotors()
+        motors.forceStop()
+        sys.exit()
 
 
 
@@ -33,44 +53,42 @@ test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
 
 
 
+# try:
+#     motors.setSpeeds(0, 0)
 
+#     print("Motor 1 forward")
+#     for s in test_forward_speeds:
+#         motors.motor1.setSpeed(s)
+#         raiseIfFault()
+#         sleep(0.002)
 
-try:
-    motors.setSpeeds(0, 0)
+#     print("Motor 1 reverse")
+#     for s in test_reverse_speeds:
+#         motors.motor1.setSpeed(s)
+#         raiseIfFault()
+#         sleep(0.002)
 
-    print("Motor 1 forward")
-    for s in test_forward_speeds:
-        motors.motor1.setSpeed(s)
-        raiseIfFault()
-        sleep(0.002)
+#     # Disable the drivers for half a second.
+#     motors.disable()
+#     sleep(0.5)
+#     motors.enable()
 
-    print("Motor 1 reverse")
-    for s in test_reverse_speeds:
-        motors.motor1.setSpeed(s)
-        raiseIfFault()
-        sleep(0.002)
+#     print("Motor 2 forward")
+#     for s in test_forward_speeds:
+#         motors.motor2.setSpeed(s)
+#         raiseIfFault()
+#         sleep(0.002)
 
-    # Disable the drivers for half a second.
-    motors.disable()
-    sleep(0.5)
-    motors.enable()
+#     print("Motor 2 reverse")
+#     for s in test_reverse_speeds:
+#         motors.motor2.setSpeed(s)
+#         raiseIfFault()
+#         sleep(0.002)
 
-    print("Motor 2 forward")
-    for s in test_forward_speeds:
-        motors.motor2.setSpeed(s)
-        raiseIfFault()
-        sleep(0.002)
+# except DriverFault as e:
+#     print("Driver %s fault!" % e.driver_num)
 
-    print("Motor 2 reverse")
-    for s in test_reverse_speeds:
-        motors.motor2.setSpeed(s)
-        raiseIfFault()
-        sleep(0.002)
-
-except DriverFault as e:
-    print("Driver %s fault!" % e.driver_num)
-
-finally:
-  # Stop the motors, even if there is an exception
-  # or the user presses Ctrl+C to kill the process.
-    motors.forceStop()
+# finally:
+#   # Stop the motors, even if there is an exception
+#   # or the user presses Ctrl+C to kill the process.
+#     motors.forceStop()
