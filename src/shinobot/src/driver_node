@@ -33,11 +33,54 @@ class Driver():
         # Set variables for the GPIO motor pins
         self.motors = Motors()
 
+    def StopMotors(self):
+        motors.motor1.setSpeed( 0 )
+        #motors.motor2.setSpeed( 0 )
+        raiseIfFault()
+        sleep(0.002)
+
+
+    def Forwards(self):
+        motors.motor1.setSpeed( MAX_SPEED/2 )
+        #motors.motor2.setSpeed( MAX_SPEED/2 )
+        raiseIfFault()
+        sleep(0.002)
+
+
+    def Backwards(self):
+        motors.motor1.setSpeed( -MAX_SPEED/2 )
+        #motors.motor2.setSpeed( -MAX_SPEED/2 )
+        raiseIfFault()
+        sleep(0.002)
+
+
+    def Left(self):
+        motors.motor1.setSpeed( -MAX_SPEED/2 )
+        #motors.motor2.setSpeed( MAX_SPEED/2 )
+        raiseIfFault()
+        sleep(0.002)
+
+
+    def Right(self):
+        motors.motor1.setSpeed( MAX_SPEED/2 )
+        #motors.motor2.setSpeed( MAX_SPEED/2 )
+        raiseIfFault()
+        sleep(0.002)
+
+
 
 if __name__ == '__main__':
     driver = Driver()
     try:
         print("OK")
+        driver.Forwards()
+        sleep(2)
+        driver.Backwards()
+        sleep(2)
+        driver.Left()
+        sleep(2)
+        driver.Right()
+        sleep(2)
     except rospy.ROSInterruptException:
         pass
     except KeyboardInterrupt:
