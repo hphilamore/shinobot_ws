@@ -7,8 +7,8 @@ import RPi.GPIO as GPIO
 import time
 import sys
 
-# Set the GPIO modes
-GPIO.setmode(GPIO.BCM)
+# # Set the GPIO modes
+# GPIO.setmode(GPIO.BCM)
 
 class DistanceSensor():
     def __init__(self, pinTrigger, pinEcho, msg_name):
@@ -20,10 +20,12 @@ class DistanceSensor():
 
     # Set the GPIO Pin modes 
     def GPIOsetup(self):
+        # Set the GPIO modes
+        GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.pinTrigger, GPIO.OUT) # Trigger
         GPIO.setup(self.pinEcho, GPIO.IN) # Echo
-     
 
+     
     # Take a distance measurement 
     def measure(self): 
         print("initialise distance sense") 
@@ -88,13 +90,14 @@ class DistanceSensor():
             pub.publish(self.measure())
             rate.sleep()
 
-if __name__ == '__main__':
-    dist_sense = DistanceSensor(17, 18, 'distance_sense')
-    try:
-        dist_sense.talker()
-    except rospy.ROSInterruptException:
-        pass
-    except KeyboardInterrupt:
-        # Reset GPIO settings 
-        GPIO.cleanup()
-        sys.exit()
+
+# if __name__ == '__main__':
+#     dist_sense = DistanceSensor(17, 18, 'distance_sense')
+#     try:
+#         dist_sense.talker()
+#     except rospy.ROSInterruptException:
+#         pass
+#     except KeyboardInterrupt:
+#         # Reset GPIO settings 
+#         GPIO.cleanup()
+#         sys.exit()

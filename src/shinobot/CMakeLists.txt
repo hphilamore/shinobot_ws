@@ -160,7 +160,7 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS scripts/distance_sense.py scripts/listener.py scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py scripts/pimoroni_motor_driver/example.py scripts/pimoroni_motor_driver/setup.py  
+catkin_install_python(PROGRAMS scripts/distance_sense.py scripts/distance_sense_L.py scripts/listener.py scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py scripts/pimoroni_motor_driver/example.py scripts/pimoroni_motor_driver/setup.py  
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
