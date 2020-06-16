@@ -118,6 +118,31 @@ class Driver():
                 print('Unknown command, stopping instead')
                 self.Stop()
 
+
+
+    def obstacleAvoid(self): 
+        # Back off a little 
+        inittime = time.time() 
+        now = time.time() 
+
+        print("Reversing...") 
+        while (now - inittime) <= self.Treverse:    
+            self.Backwards() 
+            now = time.time() 
+
+        self.Stop() 
+        inittime = time.time() 
+        now = time.time() 
+
+        print("Turning...") 
+        while (now - inittime) <= self.Tturn:
+            self.Right() 
+            now = time.time() 
+
+        self.Stop() 
+
+
+
     def driver(self):
         rospy.init_node('driver')
         rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
