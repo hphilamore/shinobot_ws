@@ -33,7 +33,7 @@ class Driver():
         # Set variables for the GPIO motor pins
         self.motors = Motors()
 
-    def StopMotors(self):
+    def Stop(self):
         motors.motor1.setSpeed( 0 )
         #motors.motor2.setSpeed( 0 )
         raiseIfFault()
@@ -80,6 +80,8 @@ if __name__ == '__main__':
         driver.Left()
         sleep(2)
         driver.Right()
+        sleep(2)
+        driver.Stop()
         sleep(2)
     except rospy.ROSInterruptException:
         pass
