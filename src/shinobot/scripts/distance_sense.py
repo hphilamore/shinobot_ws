@@ -90,7 +90,7 @@ class DistanceSensor():
 if __name__ == '__main__':
     dist_sense = DistanceSensor(17, 18, 'distance_sense')
     try:
-        DistSense.talker()
+        dist_sense.talker()
     except rospy.ROSInterruptException:
         pass
     except KeyboardInterrupt:
