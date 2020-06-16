@@ -9,7 +9,7 @@ import sys
 from distance_sense import DistanceSensor
 
 if __name__ == '__main__':
-    dist_sense = DistanceSensor(17, 18)
+    dist_sense = DistanceSensor(17, 18, 'distance_sense_L')
     try:
         dist_sense.talker()
     except rospy.ROSInterruptException:
