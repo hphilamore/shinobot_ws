@@ -20,12 +20,12 @@ def raiseIfFault():
     if motors.motor2.getFault():
         raise DriverFault(2)
 
-# Set up sequences of motor speeds.
-test_forward_speeds = list(range(0, MAX_SPEED, 1)) + \
-  [MAX_SPEED] * 200 + list(range(MAX_SPEED, 0, -1)) + [0]  
+# # Set up sequences of motor speeds.
+# test_forward_speeds = list(range(0, MAX_SPEED, 1)) + \
+#   [MAX_SPEED] * 200 + list(range(MAX_SPEED, 0, -1)) + [0]  
 
-test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
-  [-MAX_SPEED] * 200 + list(range(-MAX_SPEED, 0, 1)) + [0]  
+# test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
+#   [-MAX_SPEED] * 200 + list(range(-MAX_SPEED, 0, 1)) + [0]  
 
 class Driver():
     def __init__(self):
@@ -75,6 +75,57 @@ class Driver():
         raiseIfFault()
         sleep(0.002)
 
+
+    def storeCommand(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "Command is %s", data.data)
+        self.command = data.data
+        print(self.command, self.distance)
+        self.callback()
+
+
+    def storeDistance(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
+        self.distance = data.data
+        print(self.distance, self.command)
+        self.callback()
+
+    # Message handler
+    def callback(self):
+
+        self.Enable()
+
+        if self.distance < 20:
+            # print('Moving forwards')
+            # Forwards()
+            self.obstacleAvoid()
+
+        else:
+
+            if self.command == 'F':
+                print('Moving forwards')
+                self.Forwards()
+            elif self.command == 'B':
+                print('Moving backwards')
+                self.Backwards()
+            elif self.command == 'L':
+                print('Turning left')
+                self.Left()
+            elif self.command == 'R':
+                print('Turning right')
+                self.Right()
+            elif self.command == 'S':
+                print('Stopping')
+                self.Stop()
+            else:
+                print('Unknown command, stopping instead')
+                self.Stop()
+
+    def driver(self):
+        rospy.init_node('driver')
+        rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
+        rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
+        rospy.spin()
+
         
 
 
@@ -82,6 +133,7 @@ class Driver():
 if __name__ == '__main__':
     driver = Driver()
     try:
+        driver.driver()
         # print("OK")
         # driver.Forwards()
         # sleep(2)
