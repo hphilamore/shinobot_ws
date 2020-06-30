@@ -26,24 +26,12 @@ import time
 import VL53L0X
 import RPi.GPIO as GPIO ##
 
-# GPIO for Sensor 1 shutdown pin
-# sensor1_shutdown = 20
-# # GPIO for Sensor 2 shutdown pin
-# sensor2_shutdown = 17#16
-
+# 'L', 'C', 'R'
 shut_pins = [20, 17, 16]
-
 timing = 0.0
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-
-
-# GPIO.setup(sensor1_shutdown, GPIO.OUT)
-# GPIO.setup(sensor2_shutdown, GPIO.OUT)
-# # Set all shutdown pins low to turn off each VL53L0X
-# GPIO.output(sensor1_shutdown, GPIO.LOW)
-# GPIO.output(sensor2_shutdown, GPIO.LOW)
 
 for pin in shut_pins:
 	GPIO.setup(pin, GPIO.OUT)
@@ -56,14 +44,11 @@ time.sleep(0.50)
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
 def get_timing():
+	""" 
+	Sets up timing used to measure distance 
+	"""
 	GPIO.output(shut_pins[0], GPIO.HIGH)
 
-	# # Create a VL53L0X object
-	# tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
-	#tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
-	# I2C Address can change before tof.open()
-	#tof.change_address(0x32)
-	#tof.change_address(0x2B)
 	tof.open()
 	# Start ranging
 	tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
@@ -80,11 +65,10 @@ def get_timing():
 	# Keep all low for 500 ms or so to make sure they reset
 	time.sleep(0.50)
 
-
-
-get_timing()
-
 def distance_sense(pin):
+	"""
+	Measure distance each sensor
+	"""
 
 	GPIO.output(pin, GPIO.HIGH)
 	# Keep all low for 500 ms or so to make sure they reset
@@ -93,11 +77,6 @@ def distance_sense(pin):
 	tof.open()
 	# Start ranging
 	tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-
-	# timing = tof.get_timing()
-	# if timing < 20000:
-	#     timing = 20000
-	# print("Timing %d ms" % (timing/1000))
 
 	for count in range(1, 101):
 	    distance = tof.get_distance()
@@ -113,71 +92,8 @@ def distance_sense(pin):
 	# Keep all low for 500 ms or so to make sure they reset
 	time.sleep(0.50)
 
+
+get_timing()
+
 for pin in shut_pins:
 	distance_sense(pin)
-
-
-# #############################################
-
-
-# # Create a VL53L0X object
-# tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
-# #tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
-# # I2C Address can change before tof.open()
-# #tof.change_address(0x32)
-# #tof.change_address(0x2B)
-# tof.open()
-# # Start ranging
-# tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-
-# timing = tof.get_timing()
-# if timing < 20000:
-#     timing = 20000
-# print("Timing %d ms" % (timing/1000))
-
-# for count in range(1, 101):
-#     distance = tof.get_distance()
-#     if distance > 0:
-#         print("%d mm, %d cm, %d" % (distance, (distance/10), count))
-
-#     time.sleep(timing/1000000.00)
-
-# tof.stop_ranging()
-# tof.close()
-
-
-# GPIO.output(sensor1_shutdown, GPIO.LOW)
-# # Keep all low for 500 ms or so to make sure they reset
-# time.sleep(0.50)
-
-
-# GPIO.output(sensor2_shutdown, GPIO.HIGH)
-
-# #############################################
-
-
-# # Create a VL53L0X object
-# #tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
-# #tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
-# # I2C Address can change before tof.open()
-# #tof.change_address(0x32)
-# #tof.change_address(0x2B)
-# tof.open()
-# # Start ranging
-# tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-
-# # timing = tof.get_timing()
-# # if timing < 20000:
-# #     timing = 20000
-# # print("Timing %d ms" % (timing/1000))
-
-# for count in range(1, 101):
-#     distance = tof.get_distance()
-#     if distance > 0:
-#         print("%d mm, %d cm, %d" % (distance, (distance/10), count))
-
-#     time.sleep(timing/1000000.00)
-
-# tof.stop_ranging()
-# tof.close()
-
