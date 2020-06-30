@@ -61,6 +61,14 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/distance_sense_C.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/distance_sense_R.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/listener.py")
 endif()
 
