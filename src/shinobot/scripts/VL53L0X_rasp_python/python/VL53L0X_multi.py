@@ -63,16 +63,6 @@ if timing < 20000:
     timing = 20000
 print("Timing %d ms" % (timing/1000))
 
-tof.close()
-
-
-
-
-
-tof.open()
-# Start ranging
-tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
-
 for count in range(1, 101):
     distance = tof.get_distance()
     if distance > 0:
