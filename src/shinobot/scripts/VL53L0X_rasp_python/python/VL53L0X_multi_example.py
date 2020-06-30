@@ -53,47 +53,47 @@ time.sleep(0.50)
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 tof.change_address(0x2B)
 tof1 = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
-tof.change_address(0x2D)
+tof1.change_address(0x2D)
 
-tof.open()
-tof1.open()
+# tof.open()
+# tof1.open()
 
-# Set shutdown pin high for the first VL53L0X then 
-# call to start ranging 
-GPIO.output(sensor1_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+# # Set shutdown pin high for the first VL53L0X then 
+# # call to start ranging 
+# GPIO.output(sensor1_shutdown, GPIO.HIGH)
+# time.sleep(0.50)
+# tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-# Set shutdown pin high for the second VL53L0X then 
-# call to start ranging 
-GPIO.output(sensor2_shutdown, GPIO.HIGH)
-time.sleep(0.50)
-tof1.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+# # Set shutdown pin high for the second VL53L0X then 
+# # call to start ranging 
+# GPIO.output(sensor2_shutdown, GPIO.HIGH)
+# time.sleep(0.50)
+# tof1.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-timing = tof.get_timing()
-if timing < 20000:
-    timing = 20000
-print("Timing %d ms" % (timing/1000))
+# timing = tof.get_timing()
+# if timing < 20000:
+#     timing = 20000
+# print("Timing %d ms" % (timing/1000))
 
-for count in range(1,101):
-    distance = tof.get_distance()
-    if distance > 0:
-        print("sensor %d - %d mm, %d cm, iteration %d" % (1, distance, (distance/10), count))
-    else:
-        print("%d - Error" % 1)
+# for count in range(1,101):
+#     distance = tof.get_distance()
+#     if distance > 0:
+#         print("sensor %d - %d mm, %d cm, iteration %d" % (1, distance, (distance/10), count))
+#     else:
+#         print("%d - Error" % 1)
 
-    distance = tof1.get_distance()
-    if distance > 0:
-        print("sensor %d - %d mm, %d cm, iteration %d" % (2, distance, (distance/10), count))
-    else:
-        print("%d - Error" % 2)
+#     distance = tof1.get_distance()
+#     if distance > 0:
+#         print("sensor %d - %d mm, %d cm, iteration %d" % (2, distance, (distance/10), count))
+#     else:
+#         print("%d - Error" % 2)
 
-    time.sleep(timing/1000000.00)
+#     time.sleep(timing/1000000.00)
 
-tof1.stop_ranging()
-GPIO.output(sensor2_shutdown, GPIO.LOW)
-tof.stop_ranging()
-GPIO.output(sensor1_shutdown, GPIO.LOW)
+# tof1.stop_ranging()
+# GPIO.output(sensor2_shutdown, GPIO.LOW)
+# tof.stop_ranging()
+# GPIO.output(sensor1_shutdown, GPIO.LOW)
 
-tof.close()
-tof1.close()
+# tof.close()
+# tof1.close()
