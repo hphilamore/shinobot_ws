@@ -75,7 +75,7 @@ def get_timing():
 
 	tof.close()
 
-	GPIO.output(sensor1_shutdown, GPIO.LOW)
+	GPIO.output(shut_pins[0], GPIO.LOW)
 
 	# Keep all low for 500 ms or so to make sure they reset
 	time.sleep(0.50)
