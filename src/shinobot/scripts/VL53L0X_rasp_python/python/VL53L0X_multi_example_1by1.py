@@ -55,7 +55,7 @@ tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 # tof1 = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 # tof.change_address(0x2D)
 
-tof.open()
+#tof.open()
 #tof1.open()
 
 # Set shutdown pin high for the first VL53L0X then 
@@ -70,20 +70,26 @@ tof.open()
 # time.sleep(0.50)
 # tof1.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
-timing = tof.get_timing()
-if timing < 20000:
-    timing = 20000
-print("Timing %d ms" % (timing/1000))
-print()
+# timing = tof.get_timing()
+# if timing < 20000:
+#     timing = 20000
+# print("Timing %d ms" % (timing/1000))
+# print()
 
 for count in range(1,101):
 
+    # timing = tof.get_timing()
+    # if timing < 20000:
+    #     timing = 20000
+    # print("Timing %d ms" % (timing/1000))
+    # print()
+
+    tof.open()
     timing = tof.get_timing()
     if timing < 20000:
         timing = 20000
     print("Timing %d ms" % (timing/1000))
     print()
-
     GPIO.output(sensor1_shutdown, GPIO.HIGH)
     time.sleep(0.50)
     tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
@@ -96,8 +102,15 @@ for count in range(1,101):
 
     tof.stop_ranging()
     GPIO.output(sensor1_shutdown, GPIO.LOW)
+    tof.close()
 
 
+    tof.open()
+    timing = tof.get_timing()
+    if timing < 20000:
+        timing = 20000
+    print("Timing %d ms" % (timing/1000))
+    print()
     GPIO.output(sensor2_shutdown, GPIO.HIGH)
     time.sleep(0.50)
     tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
@@ -113,11 +126,12 @@ for count in range(1,101):
     GPIO.output(sensor2_shutdown, GPIO.LOW)
 
     time.sleep(timing/1000000.00)
+    tof.close()
 
 # tof1.stop_ranging()
 # GPIO.output(sensor2_shutdown, GPIO.LOW)
 # tof.stop_ranging()
 # GPIO.output(sensor1_shutdown, GPIO.LOW)
 
-tof.close()
+#tof.close()
 #tof1.close()
