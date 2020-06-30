@@ -80,6 +80,7 @@ def distance_sense():
 		# Start ranging
 		tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 		distance = tof.get_distance()
+		distance_array.append(distance)
 
 	    # if distance > 0:
 	    #     print("%d mm, %d cm, %d" % (distance, (distance/10), count))
