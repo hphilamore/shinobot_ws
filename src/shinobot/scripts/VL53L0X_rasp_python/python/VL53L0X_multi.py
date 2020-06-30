@@ -35,6 +35,8 @@ import RPi.GPIO as GPIO ##
 
 shut_pins = [20, 17] #, 16]
 
+timing = None
+
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
