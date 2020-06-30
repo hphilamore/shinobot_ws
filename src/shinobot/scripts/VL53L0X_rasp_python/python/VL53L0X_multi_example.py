@@ -30,6 +30,7 @@ import RPi.GPIO as GPIO
 sensor1_shutdown = 20
 # GPIO for Sensor 2 shutdown pin
 sensor2_shutdown = 17#16
+sensor3_shutdown = 16#16
 
 GPIO.setwarnings(False)
 
@@ -37,10 +38,12 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor1_shutdown, GPIO.OUT)
 GPIO.setup(sensor2_shutdown, GPIO.OUT)
+GPIO.setup(sensor3_shutdown, GPIO.OUT)
 
 # Set all shutdown pins low to turn off each VL53L0X
 GPIO.output(sensor1_shutdown, GPIO.LOW)
 GPIO.output(sensor2_shutdown, GPIO.LOW)
+GPIO.output(sensor3_shutdown, GPIO.LOW)
 
 # Keep all low for 500 ms or so to make sure they reset
 time.sleep(0.50)
@@ -50,10 +53,10 @@ time.sleep(0.50)
 # tof = VL53L0X.VL53L0X(i2c_address=0x2B)
 # tof1 = VL53L0X.VL53L0X(i2c_address=0x2D)
 
-tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
+tof = VL53L0X.VL53L0X(0x2B)
 #tof.change_address(0x2B)
-tof1 = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
-tof1.change_address(0x2D)
+tof1 = VL53L0X.VL53L0X(0x2D)
+#tof1.change_address(0x2D)
 
 # tof.open()
 # tof1.open()
