@@ -1,0 +1,103 @@
+#!/usr/bin/env python
+# license removed for brevity
+import rospy
+from std_msgs.msg import String
+from std_msgs.msg import Float64
+import RPi.GPIO as GPIO
+import time
+import sys
+
+# # Set the GPIO modes
+# GPIO.setmode(GPIO.BCM)
+
+class DistanceSensor():
+    def __init__(self, pinTrigger, pinEcho, msg_name):
+        self.pinTrigger = pinTrigger
+        self.pinEcho = pinEcho
+        self.msg_name = msg_name
+        self.GPIOsetup()
+        self.timeout = 1    
+
+    # Set the GPIO Pin modes 
+    def GPIOsetup(self):
+        # Set the GPIO modes
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pinTrigger, GPIO.OUT) # Trigger
+        GPIO.setup(self.pinEcho, GPIO.IN) # Echo
+
+     
+    # Take a distance measurement 
+    def measure(self): 
+        print("initialise distance sense") 
+        # Set trigger to False (Low) 
+        GPIO.output(self.pinTrigger, False) 
+        # Allow module to settle 
+        time.sleep(0.5)
+        
+        # Send 10us pulse to trigger
+        GPIO.output(self.pinTrigger, True) 
+        time.sleep(0.00001) 
+        GPIO.output(self.pinTrigger, False) 
+
+        # Start the timer
+        inittime = time.time() 
+        starttime = time.time() 
+        #stoptime = starttime 
+
+        # The start time is reset until the Echo pin is taken high (==1)
+        while GPIO.input(self.pinEcho) == 0: 
+            print("measuring...") 
+            starttime = time.time() 
+            # If the echo is not returned, quit the measurement
+            if  starttime - inittime >= self.timeout:
+                print("sensor timeout!")
+                stoptime = starttime 
+                break
+            #stoptime = starttime 
+        
+        # Stop when the Echo pin is no longer high - the end time
+        while GPIO.input(self.pinEcho) == 1: 
+            stoptime = time.time() 
+            # If the sensor is too close to an object, the Pi cannot 
+            # see the echo quickly enough, so we have to detect that 
+            # problem and say what has happened. 
+            # if stoptime - starttime <= 0.04: 
+            #     print("Hold on there! You're too close for me to see.") 
+            #     stoptime = starttime 
+            #     break 
+        
+        # Calculate pulse length
+        elapsedtime = stoptime - starttime 
+
+        # Distance pulse travelled in that time is 
+        # time multiplied by the speed of sound (cm/s)
+        # (there and back so halve the value)
+        distance = (elapsedtime * 34300) / 2 
+        print("Distance: %.1f cm" % distance) 
+        return distance 
+
+
+    def talker(self):
+        #pub = rospy.Publisher('distance_sense', String, queue_size=10)
+        pub = rospy.Publisher(self.msg_name, Float64)
+        rospy.init_node(self.msg_name, anonymous=True)
+        rate = rospy.Rate(10) # 10hz
+        while not rospy.is_shutdown():
+            # hello_str = "hello world %s" % rospy.get_time()
+            hello_str = "hello world %s" % str(self.measure())
+            rospy.loginfo(hello_str)
+            #pub.publish(hello_str)
+            pub.publish(self.measure())
+            rate.sleep()
+
+
+# if __name__ == '__main__':
+#     dist_sense = DistanceSensor(17, 18, 'distance_sense')
+#     try:
+#         dist_sense.talker()
+#     except rospy.ROSInterruptException:
+#         pass
+#     except KeyboardInterrupt:
+#         # Reset GPIO settings 
+#         GPIO.cleanup()
+#         sys.exit()

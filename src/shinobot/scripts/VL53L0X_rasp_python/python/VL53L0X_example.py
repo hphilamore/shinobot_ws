@@ -25,6 +25,20 @@
 import time
 import VL53L0X
 
+#############################################
+import RPi.GPIO as GPIO ##
+# GPIO for Sensor 1 shutdown pin
+sensor1_shutdown = 20
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(sensor1_shutdown, GPIO.OUT)
+# Set all shutdown pins low to turn off each VL53L0X
+GPIO.output(sensor1_shutdown, GPIO.LOW)
+# Keep all low for 500 ms or so to make sure they reset
+time.sleep(0.50)
+#############################################
+
+
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 # I2C Address can change before tof.open()
