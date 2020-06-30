@@ -31,7 +31,7 @@ import RPi.GPIO as GPIO ##
 # # GPIO for Sensor 2 shutdown pin
 # sensor2_shutdown = 17#16
 
-shut_pins = [20, 17] #, 16]
+shut_pins = [20, 17, 16]
 
 timing = 0.0
 
