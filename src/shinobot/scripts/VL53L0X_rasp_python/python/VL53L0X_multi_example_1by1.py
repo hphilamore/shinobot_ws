@@ -78,6 +78,12 @@ print()
 
 for count in range(1,101):
 
+    timing = tof.get_timing()
+    if timing < 20000:
+        timing = 20000
+    print("Timing %d ms" % (timing/1000))
+    print()
+
     GPIO.output(sensor1_shutdown, GPIO.HIGH)
     time.sleep(0.50)
     tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
