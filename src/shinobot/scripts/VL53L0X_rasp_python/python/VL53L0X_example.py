@@ -34,6 +34,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(sensor1_shutdown, GPIO.OUT)
 # Set all shutdown pins low to turn off each VL53L0X
 GPIO.output(sensor1_shutdown, GPIO.LOW)
+GPIO.output(sensor1_shutdown, GPIO.HIGH)
 # Keep all low for 500 ms or so to make sure they reset
 time.sleep(0.50)
 #############################################
