@@ -24,8 +24,6 @@
 
 import time
 import VL53L0X
-
-#############################################
 import RPi.GPIO as GPIO ##
 
 # GPIO for Sensor 1 shutdown pin
