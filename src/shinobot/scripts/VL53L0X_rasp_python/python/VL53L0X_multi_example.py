@@ -50,9 +50,9 @@ time.sleep(0.50)
 # tof = VL53L0X.VL53L0X(i2c_address=0x2B)
 # tof1 = VL53L0X.VL53L0X(i2c_address=0x2D)
 
-tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
-tof.change_address(0x2B)
-tof1 = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
+tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
+#tof.change_address(0x2B)
+tof1 = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x2B)
 tof1.change_address(0x2D)
 
 # tof.open()
