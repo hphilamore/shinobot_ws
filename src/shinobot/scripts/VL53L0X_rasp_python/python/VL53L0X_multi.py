@@ -39,11 +39,11 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
 
-GPIO.setup(sensor1_shutdown, GPIO.OUT)
-GPIO.setup(sensor2_shutdown, GPIO.OUT)
-# Set all shutdown pins low to turn off each VL53L0X
-GPIO.output(sensor1_shutdown, GPIO.LOW)
-GPIO.output(sensor2_shutdown, GPIO.LOW)
+# GPIO.setup(sensor1_shutdown, GPIO.OUT)
+# GPIO.setup(sensor2_shutdown, GPIO.OUT)
+# # Set all shutdown pins low to turn off each VL53L0X
+# GPIO.output(sensor1_shutdown, GPIO.LOW)
+# GPIO.output(sensor2_shutdown, GPIO.LOW)
 
 for pin in shut_pins:
 	GPIO.setup(pin, GPIO.OUT)
@@ -84,9 +84,9 @@ def get_timing():
 
 get_timing()
 
-def distance_sense():
+def distance_sense(pin):
 
-	GPIO.output(sensor2_shutdown, GPIO.HIGH)
+	GPIO.output(pin, GPIO.HIGH)
 	# Keep all low for 500 ms or so to make sure they reset
 	time.sleep(0.50)
 
@@ -109,12 +109,12 @@ def distance_sense():
 	tof.stop_ranging()
 	tof.close()
 
-	GPIO.output(sensor1_shutdown, GPIO.LOW)
+	GPIO.output(pin, GPIO.LOW)
 	# Keep all low for 500 ms or so to make sure they reset
 	time.sleep(0.50)
 
-
-distance_sense()
+for pin in shut_pins:
+	distance_sense(pin)
 
 
 # #############################################
