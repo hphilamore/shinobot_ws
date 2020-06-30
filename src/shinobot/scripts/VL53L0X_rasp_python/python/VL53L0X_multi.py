@@ -72,25 +72,15 @@ def distance_sense():
 	distance_array = []
 
 	for pin in shut_pins:
-
 		GPIO.output(pin, GPIO.HIGH)
-		# Keep all low for 500 ms or so to make sure they reset
+					# Keep all low for 500 ms or so to make sure they reset
 		time.sleep(0.50)
 
 		tof.open()
 		# Start ranging
 		tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+		distance = tof.get_distance()
 
-		# for count in range(1, 101):
-		#     distance = tof.get_distance()
-		#     if distance > 0:
-		#         print("%d mm, %d cm, %d" % (distance, (distance/10), count))
-
-		#     time.sleep(timing/1000000.00)
-
-
-	    distance = tof.get_distance()
-	    distance_array.append(distance)
 	    # if distance > 0:
 	    #     print("%d mm, %d cm, %d" % (distance, (distance/10), count))
 		time.sleep(timing/1000000.00)
