@@ -74,6 +74,7 @@ timing = tof.get_timing()
 if timing < 20000:
     timing = 20000
 print("Timing %d ms" % (timing/1000))
+print()
 
 for count in range(1,101):
 
@@ -85,6 +86,7 @@ for count in range(1,101):
         print("sensor %d - %d mm, %d cm, iteration %d" % (1, distance, (distance/10), count))
     else:
         print("%d - Error" % 1)
+        print()
 
     tof.stop_ranging()
     GPIO.output(sensor1_shutdown, GPIO.LOW)
@@ -99,6 +101,7 @@ for count in range(1,101):
         print("sensor %d - %d mm, %d cm, iteration %d" % (2, distance, (distance/10), count))
     else:
         print("%d - Error" % 2)
+        print()
 
     tof.stop_ranging()
     GPIO.output(sensor2_shutdown, GPIO.LOW)
