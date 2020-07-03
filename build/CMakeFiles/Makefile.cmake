@@ -24,6 +24,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/shinobot/shinobot_ws/src/shinobot/package.xml"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/python/distance_sense.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/key_publisher.py"
+  "/home/shinobot/shinobot_ws/src/shinobot/scripts/keys_to_twist.py"
+  "/home/shinobot/shinobot_ws/src/shinobot/scripts/keys_to_twist_using_rate.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/listener.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/pimoroni_motor_driver/example.py"
