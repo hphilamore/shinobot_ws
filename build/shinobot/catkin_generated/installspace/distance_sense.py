@@ -3,31 +3,62 @@
 import rospy
 from std_msgs.msg import String
 from std_msgs.msg import Float64
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import time
 import sys
+import VL53L0X
+import RPi.GPIO as GPIO
 
 # # Set the GPIO modes
 # GPIO.setmode(GPIO.BCM)
 
 class DistanceSensor():
-    def __init__(self, pinTrigger, pinEcho, msg_name):
-        self.pinTrigger = pinTrigger
-        self.pinEcho = pinEcho
-        self.msg_name = msg_name
+    def __init__(self, shut_pins):
+        self.shut_pins = shut_pins
+        # self.pinEcho = pinEcho
+        # self.msg_name = msg_name
         self.GPIOsetup()
-        self.timeout = 1    
+        self.timing = 0.0
+        self.tof = VL53L0X.VL53L0X(i2c_bus=1,i2c_address=0x29)
 
-    # Set the GPIO Pin modes 
+
+    
     def GPIOsetup(self):
-        # Set the GPIO modes
+        """ Set the GPIO Pin modes """
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.pinTrigger, GPIO.OUT) # Trigger
-        GPIO.setup(self.pinEcho, GPIO.IN) # Echo
+        for pin in self.shut_pins:
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, GPIO.LOW)
+        # Keep all low for 500 ms or so to make sure they reset
+        time.sleep(0.50)
+
+
+    def get_timing():
+        """ Sets up timing used to measure distance """
+        GPIO.output(self.shut_pins[0], GPIO.HIGH)
+
+        self.tof.open()
+
+        # Start ranging
+        self.tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+
+        self.timing = tof.get_timing()
+        if self.timing < 20000:
+            self.timing = 20000
+        print("Timing %d ms" % (self.timing/1000))
+
+        self.tof.close()
+
+        GPIO.output(self.shut_pins[0], GPIO.LOW)
+
+        # Keep all low for 500 ms or so to make sure they reset
+        time.sleep(0.50)
 
      
-    # Take a distance measurement 
+    
     def measure(self): 
+        """ Take a distance measurement from each sensor"""
         print("initialise distance sense") 
         # Set trigger to False (Low) 
         GPIO.output(self.pinTrigger, False) 
