@@ -80,7 +80,7 @@ class Driver():
 
     def velocity_received_callback(self, message):
         """Handle new velocity command message."""
-        rospy.loginfo(rospy.get_caller_id() + "Linear vel = %s" + "Angular vel = %s", message.linear.x, message.angular.z)
+        rospy.loginfo(rospy.get_caller_id() + "Linear vel = %s" + ", Angular vel = %s", message.linear.x, message.angular.z)
         #rospy.loginfo(rospy.get_caller_id() + "Angular vel = %s", message.angular.z)
 
         self._last_received = rospy.get_time()
@@ -161,7 +161,7 @@ class Driver():
                 print('Stopping')
                 self.Stop()
             else:
-                print('Unknown command, stopping instead')
+                print('Unknown command, %s stopping instead', self.command)
                 self.Stop()
 
 
