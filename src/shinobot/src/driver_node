@@ -80,9 +80,28 @@ class Driver():
 
     def velocity_received_callback(self, message):
         """Handle new velocity command message."""
-        rospy.loginfo(rospy.get_caller_id() + "Command is %s", message.linear.x)
+        rospy.loginfo(rospy.get_caller_id() + "Linear vel = %s" + "Angular vel = %s", message.linear.x, message.angular.z)
+        #rospy.loginfo(rospy.get_caller_id() + "Angular vel = %s", message.angular.z)
 
-        # self._last_received = rospy.get_time()
+        self._last_received = rospy.get_time()
+
+        linear = message.linear.x
+        angular = message.angular.z
+
+        if ((linear==1) & (angular==0)):
+            self.command = 'F'
+        elif ((linear==-1) & (angular==0)):
+            self.command = 'B'
+        elif ((linear==0) & (angular==-1)):
+            self.command = 'L'
+        elif ((linear==0) & (angular==1)):
+            self.command = 'R'
+        elif ((linear==0) & (angular==0)):
+            self.command = 'S'
+        else:
+            self.command = 'U'
+
+        self.callback()
 
         # # Extract linear and angular velocities from the message
         # linear = message.linear.x
@@ -118,7 +137,8 @@ class Driver():
     # Message handler
     def callback(self):
 
-        if self.distance < 20:
+        #if self.distance < 20:
+        if self.distance != None:
             # print('Moving forwards')
             # Forwards()
             self.obstacleAvoid()
@@ -173,7 +193,7 @@ class Driver():
         rospy.init_node('driver')
         #rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
         rospy.Subscriber('cmd_vel', Twist, self.velocity_received_callback)
-        rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
+        #rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
         rospy.spin()
 
         
