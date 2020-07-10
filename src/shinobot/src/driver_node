@@ -88,15 +88,15 @@ class Driver():
         linear = message.linear.x
         angular = message.angular.z
 
-        if ((linear==1) & (angular==0)):
+        if ((linear==1) and (angular==0)):
             self.command = 'F'
-        elif ((linear==-1) & (angular==0)):
+        elif ((linear==-1) and (angular==0)):
             self.command = 'B'
-        elif ((linear==0) & (angular==-1)):
+        elif ((linear==0) and (angular==-1)):
             self.command = 'L'
-        elif ((linear==0) & (angular==1)):
+        elif ((linear==0) and (angular==1)):
             self.command = 'R'
-        elif ((linear==0) & (angular==0)):
+        elif ((linear==0) and (angular==0)):
             self.command = 'S'
         else:
             self.command = 'U'
@@ -161,7 +161,7 @@ class Driver():
                 print('Stopping')
                 self.Stop()
             else:
-                print('Unknown command, %s stopping instead', self.command)
+                print('Unknown command, %s stopping instead' % self.command)
                 self.Stop()
 
 
