@@ -16,7 +16,7 @@ def keys_cb(msg, twist_pub):
 	g_last_twist.angular.z = vels[0]
 	g_last_twist.linear.x = vels[1]
 	twist_pub.publish(g_last_twist)
-	
+
 if __name__ == '__main__':
 	rospy.init_node('keys_to_twist')
 	twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
