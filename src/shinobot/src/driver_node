@@ -13,198 +13,161 @@ import rospy
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
 
-key_mapping = { 'w': [ 0, 1], 'x': [0, -1],
-                'a': [-1, 0], 'd': [1, 0],
-                's': [ 0, 0] }
+# Define a custom exception to raise if a fault is detected.
+class DriverFault(Exception):
+    def __init__(self, driver_num):
+        self.driver_num = driver_num
 
-g_last_twist = None
-g_vel_scales = [0.1, 0.1] # default to very slow
+    def raiseIfFault():
+        if motors.motor1.getFault():
+            raise DriverFault(1)
+        if motors.motor2.getFault():
+            raise DriverFault(2)
 
-def keys_cb(msg, twist_pub):
-    global g_last_twist, g_vel_scales
-    if len(msg.data) == 0 or not key_mapping.has_key(msg.data[0]):
-        return # unknown key
-    vels = key_mapping[msg.data[0]]
-    g_last_twist.angular.z = vels[0] * g_vel_scales[0]
-    g_last_twist.linear.x = vels[1] * g_vel_scales[1]
-    twist_pub.publish(g_last_twist)
+# # Set up sequences of motor speeds.
+# test_forward_speeds = list(range(0, MAX_SPEED, 1)) + \
+#   [MAX_SPEED] * 200 + list(range(MAX_SPEED, 0, -1)) + [0]  
 
-if __name__ == '__main__':
-    rospy.init_node('keys_to_twist')
-    twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size=1)
-    rospy.Subscriber('keys', String, keys_cb, twist_pub)
-    g_last_twist = Twist() # initializes to zero
-    if rospy.has_param('~linear_scale'):
-        g_vel_scales[1] = rospy.get_param('~linear_scale')
-    else:
-        rospy.logwarn("linear scale not provided; using %.1f" %\
-        g_vel_scales[1])
-    if rospy.has_param('~angular_scale'):
-        g_vel_scales[0] = rospy.get_param('~angular_scale')
-    else:
-        rospy.logwarn("angular scale not provided; using %.1f" %\
-        g_vel_scales[0])
+# test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
+#   [-MAX_SPEED] * 200 + list(range(-MAX_SPEED, 0, 1)) + [0]  
 
-    rate = rospy.Rate(10)
-    while not rospy.is_shutdown():
-        twist_pub.publish(g_last_twist)
-        rate.sleep()
+class Driver():
+    def __init__(self):
 
-# # Define a custom exception to raise if a fault is detected.
-# class DriverFault(Exception):
-#     def __init__(self, driver_num):
-#         self.driver_num = driver_num
+        # Set variables for the GPIO motor pins
+        self.motors = Motors()
 
-# def raiseIfFault():
-#     if motors.motor1.getFault():
-#         raise DriverFault(1)
-#     if motors.motor2.getFault():
-#         raise DriverFault(2)
+        # Time for obstacle avoid operations
+        self.Treverse = 2
+        self.Tturn = 2 
 
-# # # Set up sequences of motor speeds.
-# # test_forward_speeds = list(range(0, MAX_SPEED, 1)) + \
-# #   [MAX_SPEED] * 200 + list(range(MAX_SPEED, 0, -1)) + [0]  
+        # Control variables 
+        self.command = 'S'
+        self.distance = None 
 
-# # test_reverse_speeds = list(range(0, -MAX_SPEED, -1)) + \
-# #   [-MAX_SPEED] * 200 + list(range(-MAX_SPEED, 0, 1)) + [0]  
-
-# class Driver():
-#     def __init__(self):
-
-#         # Set variables for the GPIO motor pins
-#         self.motors = Motors()
-
-#         # Time for obstacle avoid operations
-#         self.Treverse = 2
-#         self.Tturn = 2 
-
-#         # Control variables 
-#         self.command = 'S'
-#         self.distance = None 
-
-#     def Stop(self):
-#         motors.motor1.setSpeed( 0 )
-#         motors.motor2.setSpeed( 0 )
-#         raiseIfFault()
-#         sleep(0.002)
+    def Stop(self):
+        motors.motor1.setSpeed( 0 )
+        motors.motor2.setSpeed( 0 )
+        raiseIfFault()
+        sleep(0.002)
 
 
-#     def Forwards(self):
-#         motors.motor1.setSpeed( MAX_SPEED/4 )
-#         motors.motor2.setSpeed( MAX_SPEED/4 )
-#         raiseIfFault()
-#         sleep(0.002)
+    def Forwards(self):
+        motors.motor1.setSpeed( MAX_SPEED/4 )
+        motors.motor2.setSpeed( MAX_SPEED/4 )
+        raiseIfFault()
+        sleep(0.002)
 
 
-#     def Backwards(self):
-#         motors.motor1.setSpeed( -MAX_SPEED/4 )
-#         motors.motor2.setSpeed( -MAX_SPEED/4 )
-#         raiseIfFault()
-#         sleep(0.002)
+    def Backwards(self):
+        motors.motor1.setSpeed( -MAX_SPEED/4 )
+        motors.motor2.setSpeed( -MAX_SPEED/4 )
+        raiseIfFault()
+        sleep(0.002)
 
 
-#     def Left(self):
-#         motors.motor1.setSpeed( MAX_SPEED/4 )
-#         motors.motor2.setSpeed( -MAX_SPEED/4 )
-#         raiseIfFault()
-#         sleep(0.002)
+    def Left(self):
+        motors.motor1.setSpeed( MAX_SPEED/4 )
+        motors.motor2.setSpeed( -MAX_SPEED/4 )
+        raiseIfFault()
+        sleep(0.002)
 
 
-#     def Right(self):
-#         motors.motor1.setSpeed( -MAX_SPEED/4 )
-#         motors.motor2.setSpeed( MAX_SPEED/4 )
-#         raiseIfFault()
-#         sleep(0.002)
+    def Right(self):
+        motors.motor1.setSpeed( -MAX_SPEED/4 )
+        motors.motor2.setSpeed( MAX_SPEED/4 )
+        raiseIfFault()
+        sleep(0.002)
 
 
-#     def storeCommand(self, data):
-#         rospy.loginfo(rospy.get_caller_id() + "Command is %s", data.data)
-#         self.command = data.data
-#         print(self.command, self.distance)
-#         self.callback()
+    def storeCommand(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "Command is %s", data.data)
+        self.command = data.data
+        print(self.command, self.distance)
+        self.callback()
 
 
-#     def storeDistance(self, data):
-#         rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
-#         self.distance = data.data
-#         print(self.distance, self.command)
-#         self.callback()
+    def storeDistance(self, data):
+        rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
+        self.distance = data.data
+        print(self.distance, self.command)
+        self.callback()
 
-#     # Message handler
-#     def callback(self):
+    # Message handler
+    def callback(self):
 
-#         if self.distance < 20:
-#             # print('Moving forwards')
-#             # Forwards()
-#             self.obstacleAvoid()
+        if self.distance < 20:
+            # print('Moving forwards')
+            # Forwards()
+            self.obstacleAvoid()
 
-#         else:
+        else:
 
-#             if self.command == 'F':
-#                 print('Moving forwards')
-#                 self.Forwards()
-#             elif self.command == 'B':
-#                 print('Moving backwards')
-#                 self.Backwards()
-#             elif self.command == 'L':
-#                 print('Turning left')
-#                 self.Left()
-#             elif self.command == 'R':
-#                 print('Turning right')
-#                 self.Right()
-#             elif self.command == 'S':
-#                 print('Stopping')
-#                 self.Stop()
-#             else:
-#                 print('Unknown command, stopping instead')
-#                 self.Stop()
+            if self.command == 'F':
+                print('Moving forwards')
+                self.Forwards()
+            elif self.command == 'B':
+                print('Moving backwards')
+                self.Backwards()
+            elif self.command == 'L':
+                print('Turning left')
+                self.Left()
+            elif self.command == 'R':
+                print('Turning right')
+                self.Right()
+            elif self.command == 'S':
+                print('Stopping')
+                self.Stop()
+            else:
+                print('Unknown command, stopping instead')
+                self.Stop()
 
 
 
-#     def obstacleAvoid(self): 
-#         # Back off a little 
-#         inittime = time.time() 
-#         now = time.time() 
+    def obstacleAvoid(self): 
+        # Back off a little 
+        inittime = time.time() 
+        now = time.time() 
 
-#         print("Reversing...") 
-#         while (now - inittime) <= self.Treverse:    
-#             self.Backwards() 
-#             now = time.time() 
+        print("Reversing...") 
+        while (now - inittime) <= self.Treverse:    
+            self.Backwards() 
+            now = time.time() 
 
-#         self.Stop() 
-#         inittime = time.time() 
-#         now = time.time() 
+        self.Stop() 
+        inittime = time.time() 
+        now = time.time() 
 
-#         print("Turning...") 
-#         while (now - inittime) <= self.Tturn:
-#             self.Right() 
-#             now = time.time() 
+        print("Turning...") 
+        while (now - inittime) <= self.Tturn:
+            self.Right() 
+            now = time.time() 
 
-#         self.Stop() 
+        self.Stop() 
 
 
 
-#     def driver(self):
-#         rospy.init_node('driver')
-#         rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
-#         rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
-#         rospy.spin()
+    def driver(self):
+        rospy.init_node('driver')
+        rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
+        rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
+        rospy.spin()
 
         
 
-# if __name__ == '__main__':
-#     driver = Driver()
-#     try:
-#         driver.driver()
+if __name__ == '__main__':
+    driver = Driver()
+    try:
+        driver.driver()
 
 
-#     except rospy.ROSInterruptException:
-#         pass
+    except rospy.ROSInterruptException:
+        pass
 
-#     except KeyboardInterrupt:
-#         # Reset GPIO settings 
-#         print('Shutting down: stopping motors')
-#         #StopMotors()
-#         motors.forceStop()
-#         sys.exit()
+    except KeyboardInterrupt:
+        # Reset GPIO settings 
+        print('Shutting down: stopping motors')
+        #StopMotors()
+        motors.forceStop()
+        sys.exit()
 
