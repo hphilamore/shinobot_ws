@@ -88,13 +88,13 @@ class Driver():
         linear = message.linear.x
         angular = message.angular.z
 
-        if ((linear==1) and (angular==0)):
+        if ((linear>0) and (angular==0)):
             self.command = 'F'
-        elif ((linear==-1) and (angular==0)):
+        elif ((linear<0) and (angular==0)):
             self.command = 'B'
-        elif ((linear==0) and (angular==-1)):
+        elif ((linear==0) and (angular<0)):
             self.command = 'L'
-        elif ((linear==0) and (angular==1)):
+        elif ((linear==0) and (angular>0)):
             self.command = 'R'
         elif ((linear==0) and (angular==0)):
             self.command = 'S'
