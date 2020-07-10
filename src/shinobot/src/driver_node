@@ -7,11 +7,9 @@ import time
 from time import sleep
 from std_msgs.msg import String
 from std_msgs.msg import Float64
+from geometry_msgs.msg import Twist
 import message_filters
 
-import rospy
-from std_msgs.msg import String
-from geometry_msgs.msg import Twist
 
 # Define a custom exception to raise if a fault is detected.
 class DriverFault(Exception):
@@ -78,6 +76,30 @@ class Driver():
         motors.motor2.setSpeed( MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
+
+
+    def velocity_received_callback(self, message):
+        """Handle new velocity command message."""
+        rospy.loginfo(rospy.get_caller_id() + "Command is %s", message.linear.x)
+
+        # self._last_received = rospy.get_time()
+
+        # # Extract linear and angular velocities from the message
+        # linear = message.linear.x
+        # angular = message.angular.z
+
+        # # Calculate wheel speeds in m/s
+        # left_speed = linear - angular*self._wheel_base/2
+        # right_speed = linear + angular*self._wheel_base/2
+
+        # # Ideally we'd now use the desired wheel speeds along
+        # # with data from wheel speed sensors to come up with the
+        # # power we need to apply to the wheels, but we don't have
+        # # wheel speed sensors. Instead, we'll simply convert m/s
+        # # into percent of maximum wheel speed, which gives us a
+        # # duty cycle that we can apply to each motor.
+        # self._left_speed_percent = (100 * left_speed/self._max_speed)
+        # self._right_speed_percent = (100 * right_speed/self._max_speed)
 
 
     def storeCommand(self, data):
@@ -149,7 +171,8 @@ class Driver():
 
     def driver(self):
         rospy.init_node('driver')
-        rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
+        #rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
+        rospy.Subscriber('cmd_vel', Twist, self.velocity_received_callback)
         rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
         rospy.spin()
 
