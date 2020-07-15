@@ -78,7 +78,7 @@ _I2C_READ_FUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
 _I2C_WRITE_FUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
 
 # Load VL53L0X shared lib
-_POSSIBLE_LIBRARY_LOCATIONS = ['~/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/bin' +'../bin'] + site.getsitepackages()
+_POSSIBLE_LIBRARY_LOCATIONS = ['~/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/bin' , '../bin'] + site.getsitepackages()
 for lib_location in _POSSIBLE_LIBRARY_LOCATIONS:
     print(type(lib_location))
     try:
