@@ -82,8 +82,8 @@ _POSSIBLE_LIBRARY_LOCATIONS = ['../bin'] + site.getsitepackages()
 for lib_location in _POSSIBLE_LIBRARY_LOCATIONS:
     print(type(lib_location))
     try:
-        _TOF_LIBRARY = CDLL("./vl53l0x_python.so") # CDLL(lib_location + "/vl53l0x_python.so")
         print('OK', lib_location)
+        _TOF_LIBRARY = CDLL("./vl53l0x_python.so") # CDLL(lib_location + "/vl53l0x_python.so")
         break
     except OSError:
         pass
