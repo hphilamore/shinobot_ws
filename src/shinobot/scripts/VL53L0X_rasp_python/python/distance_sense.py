@@ -48,17 +48,17 @@ class DistanceSensor():
         print("Timing %d ms" % (self.timing/1000))
      
     
-#     def measure(self): 
-#         """ Take a distance measurement from each sensor and return as array """
-#         distance = []
+    def measure(self): 
+        """ Take a distance measurement from each sensor and return as array """
+        distance = []
 
-#         for n in range(self.Nsensors):
-#             distance.append(self.tof[n].get_distance())
+        for n in range(self.Nsensors):
+            distance.append(self.tof[n].get_distance())
 
-#         # reverse order of list to make it intuitive left to right 
-#         distance = np.array(distance[::-1], dtype=np.float32)
+        # reverse order of list to make it intuitive left to right 
+        distance = np.array(distance[::-1], dtype=np.float32)
         
-#         return distance 
+        return distance 
 
 #     def distance_sensor(self):
 #     #def talker(self):
@@ -80,7 +80,7 @@ if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
 #     try:
 #         dist_sense.distance_sensor()
-#         #print(dist_sense.measure())
+    print(dist_sense.measure())
 #         #dist_sense.talker()
 #     except rospy.ROSInterruptException:
 #         pass
