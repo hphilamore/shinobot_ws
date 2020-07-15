@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # license removed for brevity
-PKG = 'numpy_tutorial'
-import roslib; roslib.load_manifest(PKG)
+# PKG = 'numpy_tutorial'
+# import roslib; roslib.load_manifest(PKG)
 import rospy
 
 from rospy.numpy_msg import numpy_msg
