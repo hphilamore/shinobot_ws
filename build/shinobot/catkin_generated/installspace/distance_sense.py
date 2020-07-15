@@ -18,34 +18,34 @@ import numpy as np
 # # Set the GPIO modes
 # GPIO.setmode(GPIO.BCM)
 
-# class DistanceSensor():
-#     def __init__(self, Nsensors):
-#         #self.shut_pins = shut_pins
-#         # self.pinEcho = pinEcho
-#         # self.msg_name = msg_name
-#         #self.GPIOsetup()
-#         self.Nsensors = Nsensors
-#         self.timing = 0.0
-#         self.tof = []
-#         self.sensor_setup()
-#         self.get_timing()
+class DistanceSensor():
+    def __init__(self, Nsensors):
+        #self.shut_pins = shut_pins
+        # self.pinEcho = pinEcho
+        # self.msg_name = msg_name
+        #self.GPIOsetup()
+        self.Nsensors = Nsensors
+        self.timing = 0.0
+        self.tof = []
+        self.sensor_setup()
+        self.get_timing()
 
 
-#     def sensor_setup(self):
-#         """ Create tof object for each LIDAR sensor """
-#         for n in range(self.Nsensors):
-#             self.tof.append(VL53L0X.VL53L0X(tca9548a_num=n, tca9548a_addr=0x70))
-#             self.tof[n].open()
-#             self.tof[n].start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
+    def sensor_setup(self):
+        """ Create tof object for each LIDAR sensor """
+        for n in range(self.Nsensors):
+            self.tof.append(VL53L0X.VL53L0X(tca9548a_num=n, tca9548a_addr=0x70))
+            self.tof[n].open()
+            self.tof[n].start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
 
-#     def get_timing(self):
-#         """ Sets up timing used to measure distance """
+    def get_timing(self):
+        """ Sets up timing used to measure distance """
 
-#         self.timing = self.tof[1].get_timing()
-#         if self.timing < 20000:
-#             self.timing = 20000
-#         print("Timing %d ms" % (self.timing/1000))
+        self.timing = self.tof[1].get_timing()
+        if self.timing < 20000:
+            self.timing = 20000
+        print("Timing %d ms" % (self.timing/1000))
      
     
 #     def measure(self): 
