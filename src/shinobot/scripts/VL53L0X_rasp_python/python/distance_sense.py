@@ -86,8 +86,9 @@ if __name__ == '__main__':
         pass
     except KeyboardInterrupt:
         for n in range(dist_sense.Nsensors):
-            tof[n].stop_ranging()
-            tof[n].close()
+            #tof[n].stop_ranging()
+            #tof[n].close()
+            pass
 
 
         sys.exit()
