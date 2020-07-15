@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 # license removed for brevity
+PKG = 'numpy_tutorial'
+import roslib; roslib.load_manifest(PKG)
 import rospy
+
+from rospy.numpy_msg import numpy_msg
+from rospy_tutorials.msg import Floats
 from std_msgs.msg import String
 from std_msgs.msg import Float64
 #import RPi.GPIO as GPIO
 import time
 import sys
 import VL53L0X
+import numpy as np
 #import RPi.GPIO as GPIO
 
 # # Set the GPIO modes
@@ -50,14 +56,15 @@ class DistanceSensor():
             distance.append(self.tof[n].get_distance())
 
         # reverse order of list to make it intuitive left to right 
-        distance = distance[::-1]
+        distance = np.array(distance[::-1], dtype=numpy.float32)
         
         return distance 
 
     def distance_sensor(self):
     #def talker(self):
         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher('distance_sense', Float64)
+        #pub = rospy.Publisher('distance_sense', Float64, , queue_size=1)
+        pub = rospy.Publisher('floats', numpy_msg(Floats),queue_size=1)
         rospy.init_node('distance_sense', anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
