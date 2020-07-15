@@ -43,7 +43,7 @@ tof1.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 tof2.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
 
-timing = tof0.get_timing()
+timing = tof1.get_timing()
 if timing < 20000:
     timing = 20000
 print("Timing %d ms" % (timing/1000))
