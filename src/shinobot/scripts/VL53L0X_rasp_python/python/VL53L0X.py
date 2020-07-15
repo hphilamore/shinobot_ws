@@ -88,7 +88,7 @@ for lib_location in _POSSIBLE_LIBRARY_LOCATIONS:
     except OSError:
         pass
 else:
-    raise OSError('Could not find vl53l0x_python.so')
+    raise OSError('Could not find vl53l0x_python.so, Hemma')
 
 
 class VL53L0X:
