@@ -81,12 +81,13 @@ _I2C_WRITE_FUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
 _POSSIBLE_LIBRARY_LOCATIONS = ['../bin'] + site.getsitepackages()
 for lib_location in _POSSIBLE_LIBRARY_LOCATIONS:
     try:
-        _TOF_LIBRARY = CDLL(lib_location + "/vl53l0x_python.so")
+        print('hello') #**
+        _TOF_LIBRARY = "vl53l0x_python.so" #CDLL(lib_location + "/vl53l0x_python.so")
         break
     except OSError:
         pass
 else:
-    raise OSError('Could not find vl53l0x_python.so')
+    raise OSError('Could not find vl53l0x_python.so, Hemma')
 
 
 class VL53L0X:
