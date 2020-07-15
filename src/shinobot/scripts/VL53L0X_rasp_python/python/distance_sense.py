@@ -56,7 +56,7 @@ import numpy as np
 #             distance.append(self.tof[n].get_distance())
 
 #         # reverse order of list to make it intuitive left to right 
-#         distance = np.array(distance[::-1], dtype=numpy.float32)
+#         distance = np.array(distance[::-1], dtype=np.float32)
         
 #         return distance 
 
