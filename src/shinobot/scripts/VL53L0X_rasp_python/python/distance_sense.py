@@ -68,7 +68,7 @@ class DistanceSensor():
 if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
     try:
-        print(self.measure())
+        print(dist_sense.measure())
         #dist_sense.talker()
     except rospy.ROSInterruptException:
         pass
