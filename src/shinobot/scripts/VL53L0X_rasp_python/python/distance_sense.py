@@ -78,6 +78,5 @@ if __name__ == '__main__':
             tof[n].stop_ranging()
             tof[n].close()
 
-        # Reset GPIO settings 
-        #GPIO.cleanup()
+
         sys.exit()
