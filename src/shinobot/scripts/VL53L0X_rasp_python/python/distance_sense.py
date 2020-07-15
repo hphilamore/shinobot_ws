@@ -18,15 +18,16 @@ class DistanceSensor():
         # self.pinEcho = pinEcho
         # self.msg_name = msg_name
         #self.GPIOsetup()
+        self.Nsensors = Nsensors
         self.timing = 0.0
         self.tof = []
         self.sensor_setup(Nsensors)
         self.get_timing()
 
 
-    def sensor_setup(self, N):
+    def sensor_setup(self):
         """ Create tof object for each LIDAR sensor """
-        for n in range(N):
+        for n in range(self.Nsensors):
             self.tof.append(VL53L0X.VL53L0X(tca9548a_num=n, tca9548a_addr=0x70))
             self.tof[n].open()
             self.tof[n].start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
@@ -45,24 +46,24 @@ class DistanceSensor():
         """ Take a distance measurement from each sensor and return as array """
         distance = []
 
-        for n in range(N):
+        for n in range(self.Nsensors):
             distance.append(tof[n].get_distance())
         
         return distance 
 
 
-    def talker(self):
-        #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-        pub = rospy.Publisher(self.msg_name, Float64)
-        rospy.init_node(self.msg_name, anonymous=True)
-        rate = rospy.Rate(10) # 10hz
-        while not rospy.is_shutdown():
-            # hello_str = "hello world %s" % rospy.get_time()
-            hello_str = "hello world %s" % str(self.measure())
-            rospy.loginfo(hello_str)
-            #pub.publish(hello_str)
-            pub.publish(self.measure())
-            rate.sleep()
+    # def talker(self):
+    #     #pub = rospy.Publisher('distance_sense', String, queue_size=10)
+    #     pub = rospy.Publisher(self.msg_name, Float64)
+    #     rospy.init_node(self.msg_name, anonymous=True)
+    #     rate = rospy.Rate(10) # 10hz
+    #     while not rospy.is_shutdown():
+    #         # hello_str = "hello world %s" % rospy.get_time()
+    #         hello_str = "hello world %s" % str(self.measure())
+    #         rospy.loginfo(hello_str)
+    #         #pub.publish(hello_str)
+    #         pub.publish(self.measure())
+    #         rate.sleep()
 
 
 if __name__ == '__main__':
@@ -73,7 +74,7 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         pass
     except KeyboardInterrupt:
-        for n in range(N):
+        for n in range(dist_sense.Nsensors):
             tof[n].stop_ranging()
             tof[n].close()
 
