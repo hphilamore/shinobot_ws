@@ -32,7 +32,7 @@ class DistanceSensor():
             self.tof[n].start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
 
-    def get_timing():
+    def get_timing(self):
         """ Sets up timing used to measure distance """
 
         self.timing = tof[1].get_timing()
