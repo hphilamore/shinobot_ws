@@ -46,7 +46,7 @@ for count in range(1, 101):
     # Get distance from VL53L0X  on TCA9548A bus 1
     distance = tof1.get_distance()
     if distance > 0:
-        print("1: %d mm, %d cm, %d" % (distance, (distance/10), count),end='  ')
+        print("1: %d mm, %d cm, %d" ,end='  ' % (distance, (distance/10), count))
 
     # Get distance from VL53L0X  on TCA9548A bus 2
     distance = tof2.get_distance()
