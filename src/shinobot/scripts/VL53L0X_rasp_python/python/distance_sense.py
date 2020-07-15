@@ -47,7 +47,7 @@ class DistanceSensor():
         distance = []
 
         for n in range(self.Nsensors):
-            distance.append(tof[n].get_distance())
+            distance.append(self.tof[n].get_distance())
         
         return distance 
 
