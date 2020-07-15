@@ -22,6 +22,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/shinobot/shinobot_ws/src/robot_setup_tf/package.xml"
   "/home/shinobot/shinobot_ws/src/shinobot/CMakeLists.txt"
   "/home/shinobot/shinobot_ws/src/shinobot/package.xml"
+  "/home/shinobot/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/bin/vl53l0x_python.so"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/python/VL53L0X_TCA9548A_example.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/VL53L0X_rasp_python/python/distance_sense.py"
   "/home/shinobot/shinobot_ws/src/shinobot/scripts/listener.py"
