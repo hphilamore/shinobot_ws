@@ -21,7 +21,7 @@ class DistanceSensor():
         self.Nsensors = Nsensors
         self.timing = 0.0
         self.tof = []
-        self.sensor_setup(Nsensors)
+        self.sensor_setup()
         self.get_timing()
 
 
