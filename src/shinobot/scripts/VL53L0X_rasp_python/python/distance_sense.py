@@ -48,28 +48,32 @@ class DistanceSensor():
 
         for n in range(self.Nsensors):
             distance.append(self.tof[n].get_distance())
+
+        # reverse order of list to make it intuitive left to right 
+        distance = distance[::-1]
         
         return distance 
 
-
-    # def talker(self):
-    #     #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-    #     pub = rospy.Publisher(self.msg_name, Float64)
-    #     rospy.init_node(self.msg_name, anonymous=True)
-    #     rate = rospy.Rate(10) # 10hz
-    #     while not rospy.is_shutdown():
-    #         # hello_str = "hello world %s" % rospy.get_time()
-    #         hello_str = "hello world %s" % str(self.measure())
-    #         rospy.loginfo(hello_str)
-    #         #pub.publish(hello_str)
-    #         pub.publish(self.measure())
-    #         rate.sleep()
+    def distance_sensor(self):
+    #def talker(self):
+        #pub = rospy.Publisher('distance_sense', String, queue_size=10)
+        pub = rospy.Publisher('distance_sense', Float64)
+        rospy.init_node('distance_sense', anonymous=True)
+        rate = rospy.Rate(10) # 10hz
+        while not rospy.is_shutdown():
+            # hello_str = "hello world %s" % rospy.get_time()
+            hello_str = "hello world %s" % str(self.measure())
+            rospy.loginfo(hello_str)
+            #pub.publish(hello_str)
+            pub.publish(self.measure())
+            rate.sleep()
 
 
 if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
     try:
-        print(dist_sense.measure())
+        dist_sense.distance_sensor()
+        #print(dist_sense.measure())
         #dist_sense.talker()
     except rospy.ROSInterruptException:
         pass
