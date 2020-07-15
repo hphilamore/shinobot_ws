@@ -83,7 +83,8 @@ for lib_location in _POSSIBLE_LIBRARY_LOCATIONS:
     print(type(lib_location))
     try:
         print('OK', lib_location)
-        _TOF_LIBRARY = CDLL("./vl53l0x_python.so") # CDLL(lib_location + "/vl53l0x_python.so")
+        #_TOF_LIBRARY = CDLL("./vl53l0x_python.so") # CDLL(lib_location + "/vl53l0x_python.so")
+        _TOF_LIBRARY = CDLL(lib_location + "/vl53l0x_python.so")
         break
     except OSError:
         pass
