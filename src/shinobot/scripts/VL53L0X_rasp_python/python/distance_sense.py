@@ -35,7 +35,7 @@ class DistanceSensor():
     def get_timing(self):
         """ Sets up timing used to measure distance """
 
-        self.timing = tof[1].get_timing()
+        self.timing = self.tof[1].get_timing()
         if self.timing < 20000:
             self.timing = 20000
         print("Timing %d ms" % (self.timing/1000))
