@@ -36,6 +36,9 @@ if SMBUS == 'smbus':
 elif SMBUS == 'smbus2':
     import smbus2 as smbus
 import site
+import sys
+
+sys.path.append('../bin')
 
 
 class Vl53l0xError(RuntimeError):
