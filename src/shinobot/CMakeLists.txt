@@ -162,7 +162,7 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS scripts/VL53L0X_rasp_python/python/distance_sense.py scripts/listener.py scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py scripts/pimoroni_motor_driver/example.py scripts/pimoroni_motor_driver/setup.py  scripts/tele_cmd/key_publisher.py scripts/tele_cmd/keys_to_twist.py scripts/tele_cmd/keys_to_twist_using_rate.py  scripts/tele_cmd/keys_to_twist_parameterized.py scripts/VL53L0X_rasp_python/python/VL53L0X_TCA9548A_example.py scripts/VL53L0X_rasp_python/bin/vl53l0x_python.so
+catkin_install_python(PROGRAMS scripts/VL53L0X_rasp_python/python/distance_sense.py scripts/listener.py scripts/pimoroni_motor_driver/dual_g2_hpmd_rpi.py scripts/pimoroni_motor_driver/example.py scripts/pimoroni_motor_driver/setup.py  scripts/tele_cmd/key_publisher.py scripts/tele_cmd/keys_to_twist.py scripts/tele_cmd/keys_to_twist_using_rate.py  scripts/tele_cmd/keys_to_twist_parameterized.py src/VL53L0X_rasp_python/python/VL53L0X_TCA9548A_example.py src/VL53L0X_rasp_python/bin/vl53l0x_python.so src/VL53L0X_rasp_python/bin/distance_sense.py
 #   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
