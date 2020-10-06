@@ -70,7 +70,7 @@ class DistanceSensor():
         while not rospy.is_shutdown():
             # hello_str = "hello world %s" % rospy.get_time()
             hello_str = "hello world %s" % str(self.measure())
-            rospy.loginfo(hello_str)
+            rospy.loginfo(hello_str) # print it out 
             #pub.publish(hello_str)
             pub.publish(self.measure())
             rate.sleep()
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     try:
         dist_sense.distance_sensor()
         #print(dist_sense.measure())
-        dist_sense.talker()
+        #dist_sense.talker()
     except rospy.ROSInterruptException:
         pass
     except KeyboardInterrupt:
