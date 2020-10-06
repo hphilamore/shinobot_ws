@@ -5,7 +5,7 @@ from rospy.numpy_msg import numpy_msg
 from rospy_tutorials.msg import Floats
 
 def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    rospy.loginfo(rospy.get_caller_id() + "I heard %s", type(data.data))
     
 def listener():
 
