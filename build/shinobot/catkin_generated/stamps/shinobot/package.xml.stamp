@@ -56,6 +56,13 @@
   <exec_depend>python-rpi.gpio</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <build_depend>python-numpy</build_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <build_depend>python-numpy</build_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <build_depend>VL53L0X</build_depend>
+  <exec_depend>VL53L0X</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->

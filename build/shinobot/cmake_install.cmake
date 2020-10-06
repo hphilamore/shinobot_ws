@@ -76,3 +76,23 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/key_publisher.py")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/keys_to_twist.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/keys_to_twist_using_rate.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/keys_to_twist_parameterized.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/VL53L0X_TCA9548A_example.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/shinobot" TYPE PROGRAM FILES "/home/shinobot/shinobot_ws/build/shinobot/catkin_generated/installspace/vl53l0x_python.so")
+endif()
+
