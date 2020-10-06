@@ -62,17 +62,17 @@ class DistanceSensor():
 
     def distance_sensor(self):
     #def talker(self):
-        #pub = rospy.Publisher('distance_sense', String, queue_size=10)
+        pub = rospy.Publisher('distance_sense', String, queue_size=10)
         #pub = rospy.Publisher('distance_sense', Float64, , queue_size=1)
-        pub = rospy.Publisher('floats', numpy_msg(Floats),queue_size=1)
+        #pub = rospy.Publisher('floats', numpy_msg(Floats),queue_size=1)
         rospy.init_node('distance_sense', anonymous=True)
         rate = rospy.Rate(10) # 10hz
         while not rospy.is_shutdown():
             # hello_str = "hello world %s" % rospy.get_time()
             hello_str = "hello world %s" % str(self.measure())
             rospy.loginfo(hello_str) # print it out 
-            #pub.publish(hello_str)
-            pub.publish(self.measure())
+            pub.publish(hello_str)
+            #pub.publish(self.measure())
             rate.sleep()
 
 
