@@ -8,6 +8,8 @@ from std_msgs.msg import String
 from std_msgs.msg import Float64
 from geometry_msgs.msg import Twist
 import message_filters
+from rospy.numpy_msg import numpy_msg
+from rospy_tutorials.msg import Floats
 
 
 # Define a custom exception to raise if a fault is detected.
@@ -130,61 +132,116 @@ class Driver():
     def storeDistance(self, data):
         rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
         self.distance = data.data
+        self.obstacle = self.distance<100 # any objects closer than 100mm
         print(self.distance, self.command)
         self.callback()
 
-    # Message handler
-    def callback(self):
 
-        #if self.distance < 20:
-        if self.distance != None:
-            # print('Moving forwards')
-            # Forwards()
-            self.obstacleAvoid()
-
+    def drive():
+        if self.command == 'F':
+            print('Moving forwards')
+            self.Forwards()
+        elif self.command == 'B':
+            print('Moving backwards')
+            self.Backwards()
+        elif self.command == 'L':
+            print('Turning left')
+            self.Left()
+        elif self.command == 'R':
+            print('Turning right')
+            self.Right()
+        elif self.command == 'S':
+            print('Stopping')
+            self.Stop()
         else:
-
-            if self.command == 'F':
-                print('Moving forwards')
-                self.Forwards()
-            elif self.command == 'B':
-                print('Moving backwards')
-                self.Backwards()
-            elif self.command == 'L':
-                print('Turning left')
-                self.Left()
-            elif self.command == 'R':
-                print('Turning right')
-                self.Right()
-            elif self.command == 'S':
-                print('Stopping')
-                self.Stop()
-            else:
-                print('Unknown command, %s stopping instead' % self.command)
-                self.Stop()
-
+            print('Unknown command, %s stopping instead' % self.command)
+            self.Stop()
 
 
     def obstacleAvoid(self): 
-        # Back off a little 
-        inittime = time.time() 
-        now = time.time() 
+        
+        if self.obstacle.any():
 
-        print("Reversing...") 
-        while (now - inittime) <= self.Treverse:    
-            self.Backwards() 
+            # Back off a little 
+            inittime = time.time() 
             now = time.time() 
 
-        self.Stop() 
-        inittime = time.time() 
-        now = time.time() 
+            print("Reversing...") 
+            while (now - inittime) <= self.Treverse:    
+                self.Backwards() 
+                now = time.time() 
 
-        print("Turning...") 
-        while (now - inittime) <= self.Tturn:
-            self.Right() 
+            self.Stop() 
+            inittime = time.time() 
             now = time.time() 
 
-        self.Stop() 
+            print("Turning...") 
+            while (now - inittime) <= self.Tturn:
+                self.Right() 
+                now = time.time() 
+
+            self.Stop() 
+
+        else:
+            self.drive()
+
+
+
+    # # Message handler
+    # def callback(self):
+
+    #     #if self.distance < 20:
+    #     if self.distance != None:
+    #         # print('Moving forwards')
+    #         # Forwards()
+    #         self.obstacleAvoid()
+
+    #     else:
+
+    #         if self.command == 'F':
+    #             print('Moving forwards')
+    #             self.Forwards()
+    #         elif self.command == 'B':
+    #             print('Moving backwards')
+    #             self.Backwards()
+    #         elif self.command == 'L':
+    #             print('Turning left')
+    #             self.Left()
+    #         elif self.command == 'R':
+    #             print('Turning right')
+    #             self.Right()
+    #         elif self.command == 'S':
+    #             print('Stopping')
+    #             self.Stop()
+    #         else:
+    #             print('Unknown command, %s stopping instead' % self.command)
+    #             self.Stop()
+
+
+
+
+
+
+    # def obstacleAvoid(self): 
+    #     # Back off a little 
+    #     inittime = time.time() 
+    #     now = time.time() 
+
+    #     print("Reversing...") 
+    #     while (now - inittime) <= self.Treverse:    
+    #         self.Backwards() 
+    #         now = time.time() 
+
+    #     self.Stop() 
+    #     inittime = time.time() 
+    #     now = time.time() 
+
+    #     print("Turning...") 
+    #     while (now - inittime) <= self.Tturn:
+    #         self.Right() 
+    #         now = time.time() 
+
+    #     self.Stop() 
 
 
 
@@ -193,6 +250,9 @@ class Driver():
         #rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
         rospy.Subscriber('cmd_vel', Twist, self.velocity_received_callback)
         #rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
+        #rospy.Subscriber('distance_sense', numpy_msg(Floats), self.storeDistance, queue_size=1)
+        #self.obstacleAvoid()
+        #self.drive()
         rospy.spin()
 
         
