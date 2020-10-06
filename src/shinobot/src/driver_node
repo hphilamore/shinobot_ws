@@ -78,7 +78,7 @@ class Driver():
         raiseIfFault()
         sleep(0.002)
 
-    def drive():
+    def drive(self):
         if self.command == 'F':
             print('Moving forwards')
             self.Forwards()
