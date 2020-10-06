@@ -71,7 +71,7 @@ class DistanceSensor():
             # hello_str = "hello world %s" % rospy.get_time()
             hello_str = "hello world %s" % str(self.measure())
             rospy.loginfo(hello_str) # print it out 
-            pub.publish(hello_str)
+            #pub.publish(hello_str)
             pub.publish(self.measure())
             rate.sleep()
 
