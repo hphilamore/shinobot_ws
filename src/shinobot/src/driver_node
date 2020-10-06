@@ -126,7 +126,8 @@ class Driver():
         rospy.loginfo(rospy.get_caller_id() + "Command is %s", data.data)
         self.command = data.data
         print(self.command, self.distance)
-        self.callback()
+        # self.callback()
+        self.obstacleAvoid()
 
 
     def storeDistance(self, data):
@@ -134,7 +135,8 @@ class Driver():
         self.distance = data.data
         self.obstacle = self.distance<100 # any objects closer than 100mm
         print(self.distance, self.command)
-        self.callback()
+        # self.callback()
+        self.obstacleAvoid()
 
 
     def drive():
