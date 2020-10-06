@@ -78,10 +78,11 @@ class DistanceSensor():
 
 if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
+    while(1):
+        print(dist_sense.measure())
 #     try:
 #         dist_sense.distance_sensor()
-	while(1):
-	    	print(dist_sense.measure())
+	
 #         #dist_sense.talker()
 #     except rospy.ROSInterruptException:
 #         pass
