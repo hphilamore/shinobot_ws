@@ -60,38 +60,39 @@ class DistanceSensor():
         
         return distance 
 
-#     def distance_sensor(self):
-#     #def talker(self):
-#         #pub = rospy.Publisher('distance_sense', String, queue_size=10)
-#         #pub = rospy.Publisher('distance_sense', Float64, , queue_size=1)
-#         pub = rospy.Publisher('floats', numpy_msg(Floats),queue_size=1)
-#         rospy.init_node('distance_sense', anonymous=True)
-#         rate = rospy.Rate(10) # 10hz
-#         while not rospy.is_shutdown():
-#             # hello_str = "hello world %s" % rospy.get_time()
-#             hello_str = "hello world %s" % str(self.measure())
-#             rospy.loginfo(hello_str)
-#             #pub.publish(hello_str)
-#             pub.publish(self.measure())
-#             rate.sleep()
+    def distance_sensor(self):
+    #def talker(self):
+        #pub = rospy.Publisher('distance_sense', String, queue_size=10)
+        #pub = rospy.Publisher('distance_sense', Float64, , queue_size=1)
+        pub = rospy.Publisher('floats', numpy_msg(Floats),queue_size=1)
+        rospy.init_node('distance_sense', anonymous=True)
+        rate = rospy.Rate(10) # 10hz
+        while not rospy.is_shutdown():
+            # hello_str = "hello world %s" % rospy.get_time()
+            hello_str = "hello world %s" % str(self.measure())
+            rospy.loginfo(hello_str)
+            #pub.publish(hello_str)
+            pub.publish(self.measure())
+            rate.sleep()
 
 
 if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
-    while(1):
-    	print(dist_sense.measure())
-    	time.sleep(1)
-#     try:
-#         dist_sense.distance_sensor()
-    # print(dist_sense.measure())
-#         #dist_sense.talker()
-#     except rospy.ROSInterruptException:
-#         pass
-#     except KeyboardInterrupt:
-#         for n in range(dist_sense.Nsensors):
-#             tof[n].stop_ranging()
-#             tof[n].close()
-#             pass
+    # while(1):
+    # 	print(dist_sense.measure())
+    # 	time.sleep(1)
+
+    try:
+        dist_sense.distance_sensor()
+        #print(dist_sense.measure())
+        dist_sense.talker()
+    except rospy.ROSInterruptException:
+        pass
+    except KeyboardInterrupt:
+        for n in range(dist_sense.Nsensors):
+            tof[n].stop_ranging()
+            tof[n].close()
+            pass
 
 
 #         sys.exit()
