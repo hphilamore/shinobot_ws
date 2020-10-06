@@ -78,6 +78,26 @@ class Driver():
         raiseIfFault()
         sleep(0.002)
 
+    def drive():
+        if self.command == 'F':
+            print('Moving forwards')
+            self.Forwards()
+        elif self.command == 'B':
+            print('Moving backwards')
+            self.Backwards()
+        elif self.command == 'L':
+            print('Turning left')
+            self.Left()
+        elif self.command == 'R':
+            print('Turning right')
+            self.Right()
+        elif self.command == 'S':
+            print('Stopping')
+            self.Stop()
+        else:
+            print('Unknown command, %s stopping instead' % self.command)
+            self.Stop()
+
 
     def velocity_received_callback(self, message):
         """Handle new velocity command message."""
@@ -102,7 +122,9 @@ class Driver():
         else:
             self.command = 'U'
 
-        self.callback()
+        self.drive()
+
+        #self.callback()
 
         # # Extract linear and angular velocities from the message
         # linear = message.linear.x
@@ -139,25 +161,7 @@ class Driver():
         self.obstacleAvoid()
 
 
-    def drive():
-        if self.command == 'F':
-            print('Moving forwards')
-            self.Forwards()
-        elif self.command == 'B':
-            print('Moving backwards')
-            self.Backwards()
-        elif self.command == 'L':
-            print('Turning left')
-            self.Left()
-        elif self.command == 'R':
-            print('Turning right')
-            self.Right()
-        elif self.command == 'S':
-            print('Stopping')
-            self.Stop()
-        else:
-            print('Unknown command, %s stopping instead' % self.command)
-            self.Stop()
+    
 
 
     def obstacleAvoid(self): 
