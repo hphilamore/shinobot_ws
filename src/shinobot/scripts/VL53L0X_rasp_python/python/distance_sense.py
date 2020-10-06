@@ -81,7 +81,7 @@ if __name__ == '__main__':
 #     try:
 #         dist_sense.distance_sensor()
 	while(1):
-    	print(dist_sense.measure())
+	    	print(dist_sense.measure())
 #         #dist_sense.talker()
 #     except rospy.ROSInterruptException:
 #         pass
