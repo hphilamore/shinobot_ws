@@ -78,7 +78,9 @@ class DistanceSensor():
 
 if __name__ == '__main__':
     dist_sense = DistanceSensor(3)
-    print(dist_sense.measure())
+    while(1):
+    	print(dist_sense.measure())
+    	time.sleep(1)
 #     try:
 #         dist_sense.distance_sensor()
     # print(dist_sense.measure())
