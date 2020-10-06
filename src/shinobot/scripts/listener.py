@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
+from rospy.numpy_msg import numpy_msg
+from rospy_tutorials.msg import Floats
 
 def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
@@ -14,7 +16,8 @@ def listener():
     # run simultaneously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("distance_sense", String, callback)
+    #rospy.Subscriber("distance_sense", String, callback)
+    rospy.Subscriber("distance_sense", numpy_msg(Floats), callback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
