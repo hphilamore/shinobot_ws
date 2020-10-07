@@ -1,4 +1,4 @@
 <launch>
-  <node pkg="shinobot" type="key_pulisher.py" name="key_publish">
+  <node pkg="shinobot" type="key_publisher.py" name="key_publish">
   </node>
 </launch>
