@@ -170,8 +170,12 @@ class Driver():
 
 
     def obstacleAvoid(self): 
+
+        if self.command == 'S':
+            print('Stopping')
+            self.Stop()
         
-        if self.obstacle.any():
+        elif self.obstacle.any():
             rospy.loginfo("Obstacle!!!")
 
             # Back off a little 
