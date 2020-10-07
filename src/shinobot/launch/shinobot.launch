@@ -1,5 +1,5 @@
 <launch>
   <include file="$(find shinobot)/launch/includes/teleop.launch.xml" />
-  <include file="$(find shinobot)/launch/includes/dist_sense.launch.xml" />
+  <include file="$(find shinobot)/launch/includes/dist_sens.launch.xml" />
   <include file="$(find shinobot)/launch/includes/control.launch.xml" />
 </launch>
