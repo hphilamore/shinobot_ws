@@ -1,7 +1,7 @@
 <launch>
-  <node pkg="shinobot" type="key_publisher.py" name="key_publish">
+  <node pkg="shinobot" type="key_publisher.py" name="key_publish" output="screen">
   </node>
 
-  <node pkg="shinobot" type="keys_to_twist_using_rate.py" name="keys_to_twist">
+  <node pkg="shinobot" type="keys_to_twist_using_rate.py" name="keys_to_twist" output="screen">
   </node>
 </launch>
