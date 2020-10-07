@@ -1,3 +1,4 @@
 <launch>
-  <include file="$(find shinobot)/launch/includes/teleop.launch.xml" />
+  <node pkg="shinobot" type="key_pulisher.py" name="key_publish">
+  </node>
 </launch>
