@@ -122,7 +122,7 @@ class Driver():
         else:
             self.command = 'U'
 
-        self.drive()
+        #self.drive()
 
         #self.callback()
 
@@ -259,7 +259,7 @@ class Driver():
         rospy.Subscriber('cmd_vel', Twist, self.velocity_received_callback)
         #rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
         rospy.Subscriber('distance_sense', numpy_msg(Floats), self.storeDistance, queue_size=1)
-        #self.obstacleAvoid()
+        self.obstacleAvoid()
         #self.drive()
         rospy.spin()
 
