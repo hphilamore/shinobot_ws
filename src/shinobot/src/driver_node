@@ -124,6 +124,7 @@ class Driver():
         else:
             self.command = 'U'
 
+        #self.obstacleAvoid()
         #self.drive()
 
         #self.callback()
@@ -171,6 +172,7 @@ class Driver():
     def obstacleAvoid(self): 
         
         if self.obstacle.any():
+            rospy.loginfo("Obstacle!!!")
 
             # Back off a little 
             inittime = time.time() 
