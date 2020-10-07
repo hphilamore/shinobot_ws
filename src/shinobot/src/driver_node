@@ -10,6 +10,7 @@ from geometry_msgs.msg import Twist
 import message_filters
 from rospy.numpy_msg import numpy_msg
 from rospy_tutorials.msg import Floats
+import numpy as np
 
 
 # Define a custom exception to raise if a fault is detected.
@@ -43,7 +44,7 @@ class Driver():
         # Control variables 
         self.command = 'S'
         self.distance = None 
-        self.obstacle = np.array([False, False, False])
+        self.obstacle = np.array([False, False, False], dtype=np.float32)
 
     def Stop(self):
         self.motors.motor1.setSpeed( 0 )
