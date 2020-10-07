@@ -156,9 +156,11 @@ class Driver():
         rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
         self.distance = data.data
         self.obstacle = self.distance<100 # any objects closer than 100mm
-        print(self.distance, self.command)
+        rospy.loginfo(rospy.get_caller_id() + "command = %s" + ", distance = %s" + ", obstacle = %s", 
+            self.command, self.distance, self.obstacle)
+        #print(self.distance, self.command, self.obstacle)
         # self.callback()
-        self.obstacleAvoid()
+        #self.obstacleAvoid()
 
 
     
@@ -256,7 +258,7 @@ class Driver():
         #rospy.Subscriber('command', String, self.storeCommand, queue_size=1)
         rospy.Subscriber('cmd_vel', Twist, self.velocity_received_callback)
         #rospy.Subscriber('distance_sense', Float64, self.storeDistance, queue_size=1)
-        #rospy.Subscriber('distance_sense', numpy_msg(Floats), self.storeDistance, queue_size=1)
+        rospy.Subscriber('distance_sense', numpy_msg(Floats), self.storeDistance, queue_size=1)
         #self.obstacleAvoid()
         #self.drive()
         rospy.spin()
