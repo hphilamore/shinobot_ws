@@ -1,6 +1,3 @@
 <launch>
-  <node pkg="shinobot" type="key_publisher.py" name="key_publish">
-  </node>
-  <node pkg="shinobot" type="keys_to_twist_using_rate.py" name="keys_to_twist">
-  </node>
+  <include file="$(find shinobot)/launch/includes/teleop.launch.xml" />
 </launch>

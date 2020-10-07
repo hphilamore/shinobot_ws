@@ -1,5 +1,5 @@
 <launch>
-  <node pkg="shinobot" type="key_pulisher.py" name="key_publish">
+  <node pkg="shinobot" type="key_publisher.py" name="key_publish">
   </node>
 
   <node pkg="shinobot" type="keys_to_twist_using_rate.py" name="keys_to_twist">
