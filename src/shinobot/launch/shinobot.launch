@@ -1,3 +1,4 @@
 <launch>
   <include file="$(find shinobot)/launch/includes/teleop.launch.xml" />
+  <include file="$(find shinobot)/launch/includes/control.launch.xml" />
 </launch>
