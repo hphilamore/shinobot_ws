@@ -43,6 +43,7 @@ class Driver():
         # Control variables 
         self.command = 'S'
         self.distance = None 
+        self.obstacle = np.array([False, False, False])
 
     def Stop(self):
         self.motors.motor1.setSpeed( 0 )
