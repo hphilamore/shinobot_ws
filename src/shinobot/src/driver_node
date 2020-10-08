@@ -54,8 +54,8 @@ class Driver():
 
 
     def Forwards(self):
-        self.motors.motor1.setSpeed( MAX_SPEED )
-        self.motors.motor2.setSpeed( MAX_SPEED )
+        self.motors.motor1.setSpeed( MAX_SPEED/4 )
+        self.motors.motor2.setSpeed( MAX_SPEED/4 )
         raiseIfFault()
         sleep(0.002)
 
