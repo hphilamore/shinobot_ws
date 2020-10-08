@@ -159,8 +159,8 @@ class Driver():
         #rospy.loginfo(rospy.get_caller_id() + "Distance is %s", data.data)
         self.distance = data.data
         self.obstacle = self.distance<100 # any objects closer than 100mm
-        rospy.loginfo("cmd = %s" + ", dist = %s" + ", obs = %s" + ", !!! = %s", 
-            self.command, self.distance, self.obstacle, self.obstacle.any())
+        #rospy.loginfo("cmd = %s" + ", dist = %s" + ", obs = %s" + ", !!! = %s", 
+            #self.command, self.distance, self.obstacle, self.obstacle.any())
         #print(self.distance, self.command, self.obstacle)
         # self.callback()
         self.obstacleAvoid()
